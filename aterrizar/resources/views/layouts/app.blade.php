@@ -36,6 +36,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                    @if(Auth::user())
+                      @if(Auth::user()->hasRole('user'))
                       <li class="nav-item">
                         <a class="nav-link" href="#">Vuelos </a>
                       </li>
@@ -45,6 +47,13 @@
                       <li class="nav-item">
                         <a class="nav-link" href="#"> Hoteles </a>
                       </li>
+                       @elseif(Auth::user()->hasRole('admin'))
+                       <li class="nav-item">
+                         <a class="nav-link" href="#">Configuracion </a>
+                       </li>
+                      @endif
+                    @endif
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
