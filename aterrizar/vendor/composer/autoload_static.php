@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc
+class ComposerStaticInit4e38c0c8fc32281be6e1468bd7ca7483
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -18,6 +18,7 @@ class ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
+        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -112,6 +113,7 @@ class ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc
         'C' => 
         array (
             'Cron\\' => 5,
+            'Collective\\Html\\' => 16,
         ),
         'B' => 
         array (
@@ -290,6 +292,10 @@ class ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
+        'Collective\\Html\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravelcollective/html/src',
+        ),
         'BeyondCode\\DumpServer\\' => 
         array (
             0 => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src',
@@ -342,9 +348,11 @@ class ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc
     public static $classMap = array (
         'AdminTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AdminTableSeeder.php',
         'App\\Admin' => __DIR__ . '/../..' . '/app/Admin.php',
+        'App\\City' => __DIR__ . '/../..' . '/app/City.php',
         'App\\Comercial' => __DIR__ . '/../..' . '/app/Comercial.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Flight' => __DIR__ . '/../..' . '/app/Flight.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
@@ -353,6 +361,7 @@ class ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
         'App\\Http\\Controllers\\ComercialController' => __DIR__ . '/../..' . '/app/Http/Controllers/ComercialController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\FlightController' => __DIR__ . '/../..' . '/app/Http/Controllers/FlightController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -379,6 +388,14 @@ class ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
         'Carbon\\Laravel\\ServiceProvider' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Laravel/ServiceProvider.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
+        'CitiesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CitiesTableSeeder.php',
+        'Collective\\Html\\Componentable' => __DIR__ . '/..' . '/laravelcollective/html/src/Componentable.php',
+        'Collective\\Html\\Eloquent\\FormAccessible' => __DIR__ . '/..' . '/laravelcollective/html/src/Eloquent/FormAccessible.php',
+        'Collective\\Html\\FormBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/FormBuilder.php',
+        'Collective\\Html\\FormFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/FormFacade.php',
+        'Collective\\Html\\HtmlBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlBuilder.php',
+        'Collective\\Html\\HtmlFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlFacade.php',
+        'Collective\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlServiceProvider.php',
         'ComercialTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ComercialTableSeeder.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',
@@ -3785,11 +3802,11 @@ class ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit3600fa65419901f4b3b56d047efa3ccc::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4e38c0c8fc32281be6e1468bd7ca7483::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4e38c0c8fc32281be6e1468bd7ca7483::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit4e38c0c8fc32281be6e1468bd7ca7483::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit4e38c0c8fc32281be6e1468bd7ca7483::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit4e38c0c8fc32281be6e1468bd7ca7483::$classMap;
 
         }, null, ClassLoader::class);
     }
