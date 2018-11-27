@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index');
 Route::get('/admin', 'AdminController@index');
 Route::get('/comercial', 'ComercialController@index');
 Route::resource('/flights', 'FlightController');
+Route::resource('/rooms', 'RoomController');
