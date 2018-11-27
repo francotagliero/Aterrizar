@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <table class="table table-bordered" id="tableMonedas">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
