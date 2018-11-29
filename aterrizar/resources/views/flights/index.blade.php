@@ -13,6 +13,7 @@
                     <th>Hora</th>
                     <th>Duración</th>
                     <th>Precio</th>
+                    <th>Aerolínea</th>
                     <th>Capacidad Económica</th>
                     <th>Capacidad Ejecutiva</th>
                     <th>Capacidad Primera clase</th>
@@ -28,6 +29,7 @@
                     <td>{{ $flight->time }}</td>
                     <td>{{ $flight->duration }}</td>
                     <td>{{ $flight->price }}</td>
+                    <td>{{ $flight->airline->name }}</td>
                     <td>{{ $flight->economy_seats }}</td>
                     <td>{{ $flight->business_seats }}</td>
                     <td>{{ $flight->first_class_seats }}</td>

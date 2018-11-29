@@ -30,6 +30,7 @@ class StoreFlight extends FormRequest
             'time' => 'required|date_format:H:i',
             'duration' => 'required|date_format:H:i',
             'price' => 'required',
+            'airline' => 'required|exists:airlines,id',
             'economy_seats' => 'required',
             'business_seats' => 'required',
             'first_class_seats' => 'required'

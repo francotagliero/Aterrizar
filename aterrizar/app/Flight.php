@@ -16,4 +16,10 @@ class Flight extends Model
 
         return $this->belongsTo('App\City', 'city_to');
     }
+
+
+    public function airline() {
+
+        return $this->belongsTo('App\Airline', 'airline_id');
+    }
 }

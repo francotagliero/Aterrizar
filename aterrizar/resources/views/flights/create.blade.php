@@ -41,6 +41,10 @@
             {!! Form::number('price', '0.0', ['class' => 'form-control', 'step'=>'0.1']) !!}
         </div>
         <div class="form-group">
+            {!! Form::label('airline', 'Aerolínea') !!}
+            {!! Form::select('airline', $airlines, null, ['class' => 'form-control']) !!}
+        </div>
+        <div class="form-group">
             {!! Form::label('economy_seats', 'Capacidad Económica') !!}
             {!! Form::number('economy_seats', '0', ['class' => 'form-control']) !!}
         </div>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use App\{City, Flight};
+use App\{Airline, City, Flight};
 use App\Http\Requests\StoreFlight;
 
 class FlightController extends Controller
@@ -21,7 +21,8 @@ class FlightController extends Controller
     public function create() {
 
         $cities = City::pluck('name', 'id');
-        return view('flights.create')->with(compact('cities'));
+        $airlines = Airline::pluck('name', 'id');
+        return view('flights.create')->with(compact('cities', 'airlines'));
     }
 
 
@@ -34,6 +35,7 @@ class FlightController extends Controller
         $flight->time = $request->time;
         $flight->duration = $request->duration;
         $flight->price = $request->price;
+        $flight->airline()->associate(Airline::find($request->airline));
         $flight->economy_seats = $request->economy_seats;
         $flight->business_seats = $request->business_seats;
         $flight->first_class_seats = $request->first_class_seats;
