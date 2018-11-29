@@ -25,7 +25,7 @@ class StoreFlight extends FormRequest
     {
         return [
             'from' => 'required|different:to|exists:cities,id',
-            'to' => 'required|different:from|exists:cities,id',
+            'to' => 'required|exists:cities,id',
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
             'duration' => 'required|date_format:H:i',
