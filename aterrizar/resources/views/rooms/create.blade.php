@@ -21,10 +21,6 @@
             {!! Form::select('hotel', $hotels, null, ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('city', 'Ciudad') !!}
-            {!! Form::select('city', $cities, null, ['class' => 'form-control']) !!}
-        </div>
-        <div class="form-group">
             {!! Form::label('rooms', 'Habitaciones') !!}
             {!! Form::number('rooms', '0', ['class' => 'form-control']) !!}
         </div>

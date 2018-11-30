@@ -11,4 +11,10 @@ class Hotel extends Model
 
         return $this->votes === 0 ?: $this->ratings / $this->votes;
     }
+
+
+    public function city() {
+
+        return $this->belongsTo('App\City', 'city_id');
+    }
 }

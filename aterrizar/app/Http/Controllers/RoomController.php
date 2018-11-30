@@ -19,17 +19,17 @@ class RoomController extends Controller
     
     public function create() {
 
-        $cities = City::pluck('name', 'id');
-        $hotels = Hotel::pluck('name', 'id');
-
-        return view('rooms.create')->with(compact('cities', 'hotels'));
+        $hotels = [];
+        foreach (Hotel::all() as $hotel) {
+            $hotels[$hotel->id] = "{$hotel->name} - {$hotel->city->name}";
+        }
+        return view('rooms.create')->with(compact('hotels'));
     }
 
 
     public function store(StoreRoom $request) {
 
         $room = new Room();
-        $room->city()->associate(City::find($request->city));
         $room->hotel()->associate(Hotel::find($request->hotel));
         $room->rooms = $request->rooms;
         $room->from = $request->from;

@@ -25,7 +25,6 @@ class StoreRoom extends FormRequest
     {
         return [
             'hotel' => 'required|exists:hotels,id',
-            'city' => 'required|exists:cities,id',
             'rooms' => 'required|integer|min:0',
             'from' => 'required|date',
             'to' => 'required|date|after:from'

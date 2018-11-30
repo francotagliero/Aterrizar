@@ -7,7 +7,6 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Ciudad</th>
                     <th>Hotel</th>
                     <th>Habitaciones</th>
                     <th>Desde</th>
@@ -19,7 +18,6 @@
                 @foreach($rooms as $room)
                 <tr>
                     <td>{{ $room->id }}</td>
-                    <td>{{ $room->city->name }}</td>
                     <td>{{ $room->hotel->name }}</td>
                     <td>{{ $room->rooms }}</td>
                     <td>{{ $room->from }}</td>
