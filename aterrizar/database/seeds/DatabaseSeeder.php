@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
       $this->call(CitiesTableSeeder::class);
       $this->call(HotelsTableSeeder::class);
       $this->call(CarBrandsTableSeeder::class);
+      $this->call(CarRentalAgenciesTableSeeder::class);
     }
 }
