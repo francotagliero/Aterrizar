@@ -22,3 +22,4 @@ Route::get('/admin', 'AdminController@index');
 Route::get('/comercial', 'ComercialController@index');
 Route::resource('/flights', 'FlightController');
 Route::resource('/rooms', 'RoomController');
+Route::resource('/cars', 'CarController');
