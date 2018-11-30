@@ -26,6 +26,9 @@ class UpdateHotelsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('hotels', function(Blueprint $table) {
+            $table->dropColumn('amenities');
+            $table->dropColumn('stars');
+        });
     }
 }

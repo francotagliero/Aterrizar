@@ -25,6 +25,8 @@ class UpdateFlightsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('flights', function(Blueprint $table) {
+            $table->dropColumn('airline_id');
+        });
     }
 }
