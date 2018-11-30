@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Hotel;
+use App\{City, Hotel};
 
 class HotelsTableSeeder extends Seeder
 {
@@ -12,33 +12,31 @@ class HotelsTableSeeder extends Seeder
      */
     public function run()
     {
-        $now = \Carbon\Carbon::now()->format('Y-m-d H:i:s');
         $hotels = [ 
-            ['name' => 'Roma', 
+            ['name' => 'Roma',
+            'city_id' => City::where('name', 'Buenos Aires')->first()->id,
             'price' => 450,
             'ratings' => 14,
             'votes' =>  3,
             'stars' => 3,
-            'amenities' => 'TV, Wi-Fi, Desayuno',
-            'created_at' => $now,
-            'updated_at' => $now],
+            'amenities' => 'TV, Wi-Fi, Desayuno'],
             ['name' => 'Italia',
+            'city_id' => City::where('name', 'Buenos Aires')->first()->id,
             'price' => 600,
             'ratings' => 119,
             'votes' =>  20,
             'stars' => 3,
-            'amenities' => 'TV, Wi-Fi, Desayuno, Gimnasio',
-            'created_at' => $now,
-            'updated_at' => $now],
+            'amenities' => 'TV, Wi-Fi, Desayuno, Gimnasio'],
             ['name' => 'Sudestada',
+            'city_id' => City::where('name', 'Montevideo')->first()->id,
             'price' => 200,
             'ratings' => 93,
             'votes' =>  11,
             'stars' => 2,
-            'amenities' => 'TV, Desayuno',
-            'created_at' => $now,
-            'updated_at' => $now],
+            'amenities' => 'TV, Desayuno'],
         ];
-        Hotel::insert($hotels);
+        foreach ($hotels as $hotel) {
+            Hotel::create($hotel);
+        }
     }
 }

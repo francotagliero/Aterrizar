@@ -12,51 +12,42 @@ class CitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        $now = \Carbon\Carbon::now()->format('Y-m-d H:i:s');
         $cities = [ 
             ['name' => 'Buenos Aires', 
             'state' => 'Ciudad de Buenos Aires',
             'country' => 'Argentina',
-            'code' =>  'BUE',
-            'created_at' => $now,
-            'updated_at' => $now],
+            'code' =>  'BUE'],
             ['name' => 'Lisboa',
             'state' => 'Lisboa',
             'country' => 'Portugal',
-            'code' =>  'LIS',
-            'created_at' => $now,
-            'updated_at' => $now],
+            'code' =>  'LIS'],
             ['name' => 'Montevideo',
             'state' => 'Montevideo',
             'country' => 'Uruguay',
-            'code' =>  'MVD',
-            'created_at' => $now,
-            'updated_at' => $now],
+            'code' =>  'MVD'],
             ['name' => 'Madrid',
             'state' => 'Comunidad de Madrid',
             'country' => 'España',
-            'code' =>  'MAD',
-            'created_at' => $now,
-            'updated_at' => $now],
+            'code' =>  'MAD'],
             ['name' => 'París',
             'state' => 'Ile de France',
             'country' => 'Francia',
-            'code' =>  'PAR',
-            'created_at' => $now,
-            'updated_at' => $now],
+            'code' =>  'PAR'],
             ['name' => 'Berlín',
             'state' => 'Berlín',
             'country' => 'Alemania',
-            'code' =>  'BER',
-            'created_at' => $now,
-            'updated_at' => $now],
+            'code' =>  'BER'],
             ['name' => 'Roma',
             'state' => 'Lazio',
             'country' => 'Italia',
-            'code' =>  'ROM',
-            'created_at' => $now,
-            'updated_at' => $now]
+            'code' =>  'ROM'],
+            ['name' => 'Córdoba',
+            'state' => 'Córdoba',
+            'country' => 'Argentina',
+            'code' =>  'COR']
         ];
-        City::insert($cities);
+        foreach ($cities as $city) {
+            City::create($city);
+        }
     }
 }
