@@ -15,7 +15,7 @@
         @endif
     </div>
     <div class="row justify-content-center">
-        {!! Form::open(['route' => 'flights.store']) !!}
+        {!! Form::open(['route' => 'cars.store']) !!}
         <div class="form-group">
             {!! Form::label('agency', 'Agencia') !!}
             {!! Form::select('agency', $agencies, null, ['class' => 'form-control']) !!}
