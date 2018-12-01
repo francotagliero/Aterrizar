@@ -18,11 +18,11 @@
                 @foreach($rooms as $room)
                 <tr>
                     <td>{{ $room->id }}</td>
-                    <td>{{ $room->hotel->name }}</td>
+                    <td><a href="{{ route('hotels.show', $room->id) }}">{{ $room->hotel->name }}</a></td>
                     <td>{{ $room->rooms }}</td>
                     <td>{{ $room->from }}</td>
                     <td>{{ $room->to }}</td>
-                    <td>{{ $room->hotel->price }}</td>
+                    <td>{{ number_format($room->hotel->price, 2, ',', '') }}</td>
                 </tr>
                 @endforeach
             </tbody>
