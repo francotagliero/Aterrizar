@@ -23,7 +23,7 @@ class CarController extends Controller
         foreach (CarRentalAgency::all() as $agency) {
             $agencies[$agency->id] = "{$agency->name} - {$agency->city->name}";
         }
-        $segments = [ 'A', 'B', 'C', 'D', 'E', 'F' ];
+        $segments = [ 'A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F' ];
         return view('cars.create')->with(compact('brands', 'agencies', 'segments'));
     }
 
