@@ -53,6 +53,11 @@ class CarRentalAgenciesTableSeeder extends Seeder
             'city_id' => City::where('name', 'Berlín')->first()->id,
             'ratings' => 300,
             'votes' =>  43],
+            ['name' => 'Hertz',
+            'address' => 'St. Ferdinand 27',
+            'city_id' => City::where('name', 'Paris')->first()->id,
+            'ratings' => 293,
+            'votes' =>  35]
         ];
         foreach ($agencies as $agency) {
             CarRentalAgency::create($agency);
