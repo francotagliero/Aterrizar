@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\{Car, CarBrand, CarRentalAgency};
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCar;
 
 class CarController extends Controller
 {
@@ -36,7 +37,7 @@ class CarController extends Controller
         $car->segment = $request->segment;
         $car->price = $request->price;
         $car->range = $request->range;
-        $flight->save();
+        $car->save();
 
         return redirect('cars');
     }
