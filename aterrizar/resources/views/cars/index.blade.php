@@ -24,7 +24,7 @@
                     <td>{{ $car->segment }}</td>
                     <td>{{ $car->price }}</td>
                     <td>{{ $car->range }}</td>
-                    <td>{{ $car->agency->name }}</td>
+                    <td><a href="{{ route('agencies.show', $car->agency->id) }}">{{ $car->agency->name }}</a></td>
                 </tr>
                 @endforeach
             </tbody>
