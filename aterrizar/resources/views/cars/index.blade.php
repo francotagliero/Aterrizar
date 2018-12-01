@@ -22,7 +22,7 @@
                     <td>{{ $car->brand->name }}</td>
                     <td>{{ $car->model }}</td>
                     <td>{{ $car->segment }}</td>
-                    <td>{{ $car->price }}</td>
+                    <td>{{ number_format($car->price, 2, ',', '') }}</td>
                     <td>{{ $car->range }}</td>
                     <td><a href="{{ route('agencies.show', $car->agency->id) }}">{{ $car->agency->name }}</a></td>
                 </tr>
