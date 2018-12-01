@@ -24,3 +24,4 @@ Route::resource('/flights', 'FlightController');
 Route::resource('/rooms', 'RoomController');
 Route::resource('/cars', 'CarController');
 Route::get('/hotels/{hotel}', 'HotelController@show')->name('hotels.show');
+Route::get('/agencies/{agency}', 'CarRentalAgencyController@show')->name('agencies.show');
