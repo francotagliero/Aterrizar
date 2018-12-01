@@ -25,10 +25,10 @@
                     <td>{{ $flight->id }}</td>
                     <td>{{ $flight->from->name }}</td>
                     <td>{{ $flight->to->name }}</td>
-                    <td>{{ $flight->date }}</td>
-                    <td>{{ $flight->time }}</td>
-                    <td>{{ $flight->duration }}</td>
-                    <td>{{ $flight->price }}</td>
+                    <td>{{ Carbon\Carbon::parse($flight->date)->format('Y-m-d') }}</td>
+                    <td>{{ Carbon\Carbon::parse($flight->time)->format('H:i') }}</td>
+                    <td>{{ Carbon\Carbon::parse($flight->duration)->format('H:i') }}</td>
+                    <td>{{ number_format($flight->price, 2, ',', '') }}</td>
                     <td>{{ $flight->airline->name }}</td>
                     <td>{{ $flight->economy_seats }}</td>
                     <td>{{ $flight->business_seats }}</td>
