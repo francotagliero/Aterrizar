@@ -21,6 +21,7 @@ class CreateTransactionsTable extends Migration
             $table->float('points');
             $table->boolean('points_given');
             $table->float('price');
+            $table->string('status')->default('En Carrito');
             $table->timestamps();
         });
     }

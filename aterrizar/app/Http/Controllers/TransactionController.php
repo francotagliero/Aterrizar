@@ -47,6 +47,7 @@ class TransactionController extends Controller
         $transaction->points = $request->points;
         $transaction->points_given = 'false';
         $transaction->price = $request->price;
+        //$transaction->status = 'En Carrito';
         $transaction->save();
         return redirect('transactions');
     }
