@@ -11,7 +11,8 @@ class AdminPanelsTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {    
+        DB::table('admin_panel')->truncate();
         $adminpanel = new AdminPanel();
         $adminpanel->max_flight_duration = 10;
         $adminpanel->max_gap = 2;

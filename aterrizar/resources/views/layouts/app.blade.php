@@ -39,19 +39,44 @@
                     @if(Auth::user())
                       @if(Auth::user()->hasRole('user'))
                       <li class="nav-item">
-                        <a class="nav-link" href="#">Vuelos </a>
+                        <a class="nav-link" href="#"> Buscar Vuelos </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#"> Autos </a>
+                        <a class="nav-link" href="#"> Buscar Autos </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#"> Hoteles </a>
+                        <a class="nav-link" href="#"> Buscar Hoteles </a>
+                      </li>
+                      <li class="nav-item">
+                      <a class="nav-link" href="#"> Mi Carrito </a>
+                      </li>
+                      <li class="nav-item">
+                      <a class="nav-link" href="#"> Mis Compras </a>
                       </li>
                        @elseif(Auth::user()->hasRole('admin'))
                        <li class="nav-item">
-                         <a class="nav-link" href="#">Configuracion </a>
+                         <a class="nav-link" href="adminpanel"> Panel Configuracion</a>
                        </li>
-                      @endif
+                        <li class="nav-item">
+                        <a class="nav-link" href="transactions"> Transacciones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"> Agregar Usuario</a>
+                        </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="#"> Agregar Comercial</a>
+                        </li>
+                       @elseif(Auth::user()->hasRole('comercial'))
+                       <li class="nav-item">
+                         <a class="nav-link" href="../../flights/create"> Agregar Vuelo </a>
+                       </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="../../cars/create"> Agregar Auto </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../rooms/create"> Agregar Habitacion </a>
+                        </li>
+                       @endif
                     @endif
 
                     </ul>

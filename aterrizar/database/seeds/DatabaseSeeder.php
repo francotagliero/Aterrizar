@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
       $this->call(CarRentalAgenciesTableSeeder::class);
       $this->call(CarsTableSeeder::class);
       $this->call(FlightsTableSeeder::class);
+      $this->call(AdminPanelsTableSeeder::class);
     }
 }

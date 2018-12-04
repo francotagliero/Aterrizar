@@ -12,7 +12,7 @@ class FlightsTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {   DB::table('flights')->truncate();
         $buenosAires = City::where('name', 'Buenos Aires')->first()->id;
         $montevideo = City::where('name', 'Montevideo')->first()->id;
         $lisboa = City::where('name', 'Lisboa')->first()->id;
