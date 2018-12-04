@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-	protected $fillable = [ 'service_name', 'service_id', 'user_id', 'points', 'points_given', 'price' ];
+	protected $fillable = [ 'service_name', 'service_id', 'user_id', 'points', 'points_given', 'price', 'status' ];
 
 
 	public function service($service) {
