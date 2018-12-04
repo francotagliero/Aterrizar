@@ -15,7 +15,7 @@ class CreateRegistrableUsersTable extends Migration
     {
         Schema::create('registrable_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->integer('role_id');
             $table->timestamps();
         });

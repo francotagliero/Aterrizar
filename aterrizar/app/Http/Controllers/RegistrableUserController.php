@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\RegistrableUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use App\Role;
+use App\Http\Requests\StoreRegistrableUser;
+
+
 
 class RegistrableUserController extends Controller
 {
@@ -26,8 +31,8 @@ class RegistrableUserController extends Controller
      */
     public function create()
     {
-
-        
+        $roles = Role::pluck('name', 'id');
+        return view('registrableUser.create')->with(compact('roles'));
     }
 
     /**
@@ -36,15 +41,14 @@ class RegistrableUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRegistrableUser $request)
     {
-        //
-    }
+        $registrableUser = new RegistrableUser();
+        $registrableUser->email= $request->email;
+        $registrableUser->role()->associate(Role::find($request->roles));
+        $registrableUser->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\RegistrableUser  $registrableUser
-     * @return \Illuminate\Http\Response
-     */
+        return redirect('givenregistration');
+    }
+     
 }

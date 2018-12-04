@@ -23,6 +23,7 @@ Route::get('/comercial', 'ComercialController@index');
 Route::resource('/flights', 'FlightController');
 Route::resource('/rooms', 'RoomController');
 Route::resource('/cars', 'CarController');
+Route::resource('/role', 'RoleController');
 Route::resource('/givenregistration', 'RegistrableUserController');
 Route::get('/transactions', 'TransactionController@index');
 Route::resource('/adminpanel', 'AdminPanelController');
