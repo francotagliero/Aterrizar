@@ -55,7 +55,7 @@ class RegisterController extends Controller
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users|exists:registrable_users',
             'password' => 'required|string|min:6|confirmed',
-        ]);
+            ]);
     }
 
     /**
@@ -65,17 +65,29 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
-    {
-          $user = User::create([
-            'name' => $data['name'],
-            'lastname' =>$data['lastname'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+    {       
+      $rol=RegistrableUser::where("email","=",$data['email'])->first()->role_id;
+      if($rol==2){  
+      $user = User::create([
+        'name' => $data['name'],
+        'lastname' =>$data['lastname'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+        'points'=> 0,
         ]);
-
-        $user
+      } 
+      else{
+          $user = User::create([
+        'name' => $data['name'],
+        'lastname' =>$data['lastname'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+        ]);
+      }
+      {$user
           ->roles()
-          ->attach(Role::where('name', 'user')->first());
-          return $user;
-    }
+          ->attach($rol);
+      }
+    return $user;
+}
 }

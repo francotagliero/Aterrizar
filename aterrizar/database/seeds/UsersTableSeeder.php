@@ -21,6 +21,8 @@ class UsersTableSeeder extends Seeder
       $user->lastname = 'Urquiola';
       $user->email = 'nico@aterrizar.com';
       $user->password = bcrypt('123456');
+      $user->dni = '34041040';
+      $user->username='Nico';
       $user->save();
       $user->roles()->attach($role_user);
       //usuario comun
@@ -30,6 +32,7 @@ class UsersTableSeeder extends Seeder
       $user->lastname = 'Tagliero';
       $user->email = 'franco@aterrizar.com';
       $user->password = bcrypt('123456');
+      $user->points = '0';
       $user->save();
       $user->roles()->attach($role_user);
       //usuario comercial
@@ -39,6 +42,8 @@ class UsersTableSeeder extends Seeder
       $user->lastname = 'Perez';
       $user->email = 'joaco@aterrizar.com';
       $user->password = bcrypt('123456');
+      $user->dni = '35713701';
+      $user->username='Joaco';
       $user->save();
       $user->roles()->attach($role_user);
     }

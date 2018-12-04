@@ -16,8 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'lastname',
-    ];
+        'name', 'email', 'password', 'lastname', 'points', 'dni', 'username'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -32,6 +31,13 @@ class User extends Authenticatable
     {
       return $this
           ->belongsToMany('App\Role')
+          ->withTimestamps();
+    }
+
+       public function role()
+    {
+      return $this
+          ->belongsToMany('App\RegistrableUser')
           ->withTimestamps();
     }
 
