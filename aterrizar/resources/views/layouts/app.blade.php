@@ -53,6 +53,9 @@
                       <li class="nav-item">
                       <a class="nav-link" href="#"> Mis Compras </a>
                       </li>
+                      <li class="nav-item">
+                      <a class="nav-link" href="#"> Mis Puntos </a>
+                      </li>
                        @elseif(Auth::user()->hasRole('admin'))
                        <li class="nav-item">
                          <a class="nav-link" href="../adminpanel"> Panel Configuracion</a>
