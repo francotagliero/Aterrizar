@@ -61,10 +61,10 @@
                         <a class="nav-link" href="transactions"> Transacciones</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"> Agregar Usuario</a>
+                            <a class="nav-link" href="generateuser"> Agregar Usuario</a>
                         </li>
-                         <li class="nav-item">
-                             <a class="nav-link" href="#"> Agregar Comercial</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="givenregistration"> Usuarios Agregados </a>
                         </li>
                        @elseif(Auth::user()->hasRole('comercial'))
                        <li class="nav-item">
