@@ -29,4 +29,5 @@ Route::get('/transactions', 'TransactionController@index');
 Route::resource('/adminpanel', 'AdminPanelController');
 Route::get('/hotels/{hotel}', 'HotelController@show')->name('hotels.show');
 Route::get('/agencies/{agency}', 'CarRentalAgencyController@show')->name('agencies.show');
+Route::post('/flights/search', 'FlightController@search')->name('flights.search');
 
