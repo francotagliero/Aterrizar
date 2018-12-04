@@ -55,10 +55,10 @@
                       </li>
                        @elseif(Auth::user()->hasRole('admin'))
                        <li class="nav-item">
-                         <a class="nav-link" href="adminpanel"> Panel Configuracion</a>
+                         <a class="nav-link" href="../adminpanel"> Panel Configuracion</a>
                        </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="transactions"> Transacciones</a>
+                        <a class="nav-link" href="../transactions"> Transacciones</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../../givenregistration/create"> Agregar Usuario</a>
