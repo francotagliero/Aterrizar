@@ -54,7 +54,7 @@
                       <a class="nav-link" href="#"> Mis Compras </a>
                       </li>
                       <li class="nav-item">
-                      <a class="nav-link" href="#"> Mis Puntos </a>
+                      <a class="nav-link" href="/myprofile"> Mi Perfil </a>
                       </li>
                        @elseif(Auth::user()->hasRole('admin'))
                        <li class="nav-item">
