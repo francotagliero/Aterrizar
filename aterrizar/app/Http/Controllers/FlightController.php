@@ -5,16 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\{Airline, City, Flight};
-use App\Http\Requests\StoreFlight;
+use App\Http\Requests\{SearchFlight, StoreFlight};
+use App\Services\SearchService;
 
 class FlightController extends Controller
 {
     
-    public function index() {
+    public function index(Request $request) {
 
-        $flights = Flight::all();
+        $cities = City::pluck('name', 'id');
 
-        return view('flights.index')->with('flights', $flights);
+        $flights = $request->old('flights');
+        if ($flights !== null) {
+            // Keep search on refresh
+            $request->session()->reflash();
+            return view('flights.index')->with(compact('cities', 'flights'));
+        }
+        return view('flights.index')->with(compact('cities'));
     }
     
     
@@ -42,5 +49,33 @@ class FlightController extends Controller
         $flight->save();
 
         return redirect('flights');
+    }
+
+
+    public function search(SearchFlight $request, SearchService $search) {
+
+        if ($request->non_stop) {
+            $flights = $search->nonStopFlights(
+                $request->from,
+                $request->to,
+                $request->date,
+                $request->class,
+                $request->seats
+            );
+        }
+        else {
+            $flights = $search->oneStopFlights(
+                $request->from,
+                $request->to,
+                $request->date,
+                $request->class,
+                $request->seats
+            );
+            // Merge resultset with non-stop ?
+        }
+        $input = $request->all();
+        $input['flights'] = $flights;
+        
+        return back()->withInput($input);
     }
 }
