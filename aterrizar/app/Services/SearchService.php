@@ -86,8 +86,11 @@ class SearchService {
     }
 
 
-    public function cars() {
+    public function cars($from, $to, $date_rent, $date_return, $brand, $agency) {
         
-        //
+        return Car::where([
+            ['acency_id', '=', $agency],
+            ['brand', '=', $brand]
+        ])->orderBy('price', 'ASC')->get();
     }
 }

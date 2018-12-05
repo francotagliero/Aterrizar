@@ -39,7 +39,7 @@
             @if(Auth::user())
             @if(Auth::user()->hasRole('user'))
             <li class="nav-item">
-              <a class="nav-link" href="#"> Buscar Vuelos </a>
+              <a class="nav-link" href="flights"> Buscar Vuelos </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#"> Buscar Autos </a>

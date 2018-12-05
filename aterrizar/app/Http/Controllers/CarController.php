@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\{Car, CarBrand, CarRentalAgency};
+use App\{Car, CarBrand, CarRentalAgency,City};
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreCar;
+use App\Http\Requests\{SearchCar, StoreCar};
+use App\Services\SearchService;
+
 
 class CarController extends Controller
 {
-    public function index() {
-
-        $cars = Car::all();
-
-        return view('cars.index')->with('cars', $cars);
+    public function index(Request $request) {
+        $cities = City::pluck('name', 'id');
+        $car_brands = CarBrand::pluck('name','id');
+        $car_rental_agencies=CarRentalAgency::pluck('name','id');
+       // $car_rental_agencies = $car_rental_agencies->unique('name');
+        $cars = $request->old('cars');
+        if ($cars !== null) {
+            // Keep search on refresh
+            $request->session()->reflash();
+            return view('cars.index')->with(compact('cities', 'car_brands','car_rental_agencies','cars'));
+        }
+        return view('cars.index')->with(compact('cities','car_brands','car_rental_agencies'));
     }
     
     
@@ -41,4 +50,22 @@ class CarController extends Controller
 
         return redirect('cars');
     }
+
+    public function search(SearchCar $request, SearchService $search) {
+
+            $cars = $search->cars(
+                $request->from,
+                $request->to,
+                $request->date_rent,
+                $request->date_return,
+                $request->brand,
+                $request->agency
+            );
+        $input = $request->all();
+        $input['cars'] = $cars;
+        
+        return back()->withInput($input);
+    }
+
+
 }
