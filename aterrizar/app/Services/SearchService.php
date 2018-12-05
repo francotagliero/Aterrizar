@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\{AdminPanel, Car, Flight, Room};
+use App\{AdminPanel, Car, Flight, Room, CarRentalAgency};
 use Carbon\Carbon;
 
 class SearchService {
@@ -85,12 +85,27 @@ class SearchService {
         //
     }
 
-
     public function cars($from, $to, $date_rent, $date_return, $brand, $agency) {
-        
+
+        $agencyId=$this->getAgencyIdByCity($from,$agency);
         return Car::where([
-            ['acency_id', '=', $agency],
-            ['brand', '=', $brand]
+            ['agency_id', '=', $agencyId],
+            ['brand_id', '=', $brand]
         ])->orderBy('price', 'ASC')->get();
     }
+
+
+    public function getAgencyIdByCity($from, $agency){
+        
+        $agencyName= CarRentalAgency::select('name')->where([
+              ['id', '=', $agency]
+              ])->get()->toArray();
+
+        return CarRentalAgency::select('id')->where([
+              ['city_id', '=', $from],
+              ['name', '=', $agencyName]
+            ])->get()->toArray();
+    }
+
+
 }

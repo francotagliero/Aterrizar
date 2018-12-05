@@ -13,8 +13,8 @@ class CarController extends Controller
     public function index(Request $request) {
         $cities = City::pluck('name', 'id');
         $car_brands = CarBrand::pluck('name','id');
-        $car_rental_agencies=CarRentalAgency::pluck('name','id');
-       // $car_rental_agencies = $car_rental_agencies->unique('name');
+        $car_rental_agencies=CarRentalAgency::pluck('name','id')->toArray();
+        $car_rental_agencies=array_unique($car_rental_agencies);
         $cars = $request->old('cars');
         if ($cars !== null) {
             // Keep search on refresh

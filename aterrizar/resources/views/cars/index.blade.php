@@ -70,7 +70,6 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>Segmento</th>
@@ -82,7 +81,6 @@
             <tbody>
                 @foreach($cars as $car)
                 <tr>
-                    <td>{{ $car->id }}</td>
                     <td>{{ $car->brand->name }}</td>
                     <td>{{ $car->model }}</td>
                     <td>{{ $car->segment }}</td>

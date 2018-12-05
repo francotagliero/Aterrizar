@@ -27,7 +27,7 @@ class SearchCar extends FormRequest
             'from' => 'required|different:to|exists:cities,id',
             'to' => 'required|exists:cities,id',
             'date_rent' => 'required|date|different:date_return',
-            'date_return' =>'required|date'    
+            'date_return' =>'required|date|after:date_rent',    
             'brand' => 'required|exists:car_brands,id',
             'agency' => 'required|exists:car_rental_agencies,id'
         ];
