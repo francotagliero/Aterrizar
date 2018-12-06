@@ -13,7 +13,6 @@
                     <th>Puntos</th>
                     <th>Puntos Asignados</th>
                     <th>Precio</th>
-                    <th>Estado</th>
                     <th>Accion</th>
                 </tr>
             </thead>
@@ -26,9 +25,9 @@
                     <td>{{ $transaction->points }}</td>
                     <td>{{ $transaction->points_given }}</td>
                     <td>{{ number_format($transaction->price, 2, ',', '') }}</td>
-                    <td>{{ $transaction->status }}</td>
-                    <td> <button type="button" class="btn btn-outline-primary">Comprar</button>
-                      <button type="button" class="btn btn-outline-danger">Eliminar</button> </td>
+                    <td> <a class="btn btn-outline-primary" href="/deleteTransaction" role="button">Comprar</a>
+                         <a class="btn btn-outline-danger" href="#" role="button">Eliminar</a>
+                      </td>
 
                 </tr>
                 @endforeach
