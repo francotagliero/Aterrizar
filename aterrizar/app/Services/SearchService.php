@@ -66,7 +66,7 @@ class SearchService {
             ['city_to', '=', $to],
             ['date', '=', $date],
             [$this->seatsField($class), '>=', $seats]
-        ])->orderBy('price', 'ASC')->get();
+        ])->orderBy('price', 'ASC')->get()->all();
     }
 
 
