@@ -68,7 +68,7 @@
             {!! Form::close() !!}
         </div>
 
-        @isset($flights)
+        @if (! empty($flights))
         <table class="table">
             <thead class="thead-light">
                 <tr>
@@ -103,7 +103,9 @@
                 @endforeach
             </tbody>
         </table>
-        @endisset
+        @else
+            @include('common.alert', ['type' => 'danger', 'message' => 'La búsqueda no arrojó ningún resultado'])
+        @endif
     </div>
 </div>
 @endsection
