@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Transactions;
 use Illuminate\Http\Request;
 use App\Transaction;
-
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -20,7 +20,25 @@ class TransactionController extends Controller
 
         return view('transactions.index')->with('transactions', $transactions);
     }
-    
+
+    public function miCarrito()
+    {
+      $transactions = Transaction::where([
+                                         ['status', '=', 'En Carrito'],
+                                         ['user_id', '=', Auth::user()->id],
+                                        ])->get();
+      return view('miCarrito.index')->with('transactions', $transactions);
+          }
+
+    public function myShopping()
+    {
+      $transactions = Transaction::where([
+                                         ['status', '<>', 'En Carrito'],
+                                         ['user_id', '=', Auth::user()->id],
+                                        ])->get();
+      return view('myShopping.index')->with('transactions', $transactions);
+    }
+
 
     /**
      * Show the form for creating a new resource.
