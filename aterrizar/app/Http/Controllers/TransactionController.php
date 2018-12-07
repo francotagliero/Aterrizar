@@ -33,18 +33,15 @@ class TransactionController extends Controller
 
     public function addFlightToCart($flightId)
     {
-      $flight = Flight::where('id', '=', $flightId)->get();
-      //dd($flight);
-      //$transaction = new Transaction();
-      echo $flight->getId();
-      //$transaction->service_name = $flight->
-      //$transaction->service_id = $request->service_id;
-      //$transaction->user_id = $request->user_id;
-      //$transaction->points = $request->points;
-      //$transaction->points_given = 'false';
-      //$transaction->price = $request->price;
-      //$transaction->status = 'En Carrito';
-      //$transaction->save();
+      //$flight = Flight::where('id', '=', $flightId)->get();
+
+    }
+
+    public function completeTransaction($idTransaction)
+    {
+      //falta chequear la tarjeta y los puntos
+      $transaction = Transaction::where('id', '=', $idTransaction)->update(['status' => 'Comprado']);
+      return $this->myShopping();
     }
 
     public function myShopping()

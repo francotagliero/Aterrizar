@@ -48,11 +48,7 @@
               <a class="nav-link" href="#"> Buscar Hoteles </a>
             </li>
             <li class="nav-item">
-<<<<<<< HEAD
               <a class="nav-link" href="myCart"> Mi Carrito </a>
-=======
-              <a class="nav-link" href="#"> Mi Carrito </a>
->>>>>>> 86f5b5c4026ab7e56aacd712d0592f2307011546
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#"> Mis Compras </a>
