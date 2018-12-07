@@ -8,6 +8,8 @@ class Hotel extends Model
 {
     
     protected $fillable = [ 'name', 'price', 'ratings', 'votes', 'stars', 'amenities', 'city_id' ];
+    
+    protected $casts = [ 'amenities' => 'json' ];
 
     
     public function getAverageRatingAttribute() {

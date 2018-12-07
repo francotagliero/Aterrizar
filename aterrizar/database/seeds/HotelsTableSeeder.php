@@ -12,6 +12,7 @@ class HotelsTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('hotels')->truncate();
         $hotels = [ 
             ['name' => 'Roma',
             'city_id' => City::where('name', 'Roma')->first()->id,
@@ -19,21 +20,21 @@ class HotelsTableSeeder extends Seeder
             'ratings' => 14,
             'votes' =>  3,
             'stars' => 3,
-            'amenities' => 'TV, Wi-Fi, Desayuno'],
+            'amenities' => ['TV', 'Wi-Fi', 'Desayuno']],
             ['name' => 'Italia',
             'city_id' => City::where('name', 'Roma')->first()->id,
             'price' => 600,
             'ratings' => 119,
             'votes' =>  20,
             'stars' => 3,
-            'amenities' => 'TV, Wi-Fi, Desayuno, Gimnasio'],
+            'amenities' => ['TV', 'Wi-Fi', 'Desayuno', 'Gimnasio']],
             ['name' => 'Sudestada',
             'city_id' => City::where('name', 'Paris')->first()->id,
             'price' => 200,
             'ratings' => 93,
             'votes' =>  11,
             'stars' => 2,
-            'amenities' => 'TV, Desayuno'],
+            'amenities' => ['TV', 'Desayuno']],
         ];
         foreach ($hotels as $hotel) {
             Hotel::create($hotel);
