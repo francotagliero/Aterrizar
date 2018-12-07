@@ -48,7 +48,7 @@
               <a class="nav-link" href="#"> Buscar Hoteles </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="miCarrito"> Mi Carrito </a>
+              <a class="nav-link" href="myCart"> Mi Carrito </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="myShopping"> Mis Compras </a>

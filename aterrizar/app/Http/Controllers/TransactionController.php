@@ -6,6 +6,7 @@ use App\Transactions;
 use Illuminate\Http\Request;
 use App\Transaction;
 use Illuminate\Support\Facades\Auth;
+use App\Flight;
 
 class TransactionController extends Controller
 {
@@ -21,14 +22,30 @@ class TransactionController extends Controller
         return view('transactions.index')->with('transactions', $transactions);
     }
 
-    public function miCarrito()
+    public function myCart()
     {
       $transactions = Transaction::where([
                                          ['status', '=', 'En Carrito'],
                                          ['user_id', '=', Auth::user()->id],
                                         ])->get();
-      return view('miCarrito.index')->with('transactions', $transactions);
-          }
+      return view('myCart.index')->with('transactions', $transactions);
+      }
+
+    public function addFlightToCart($flightId)
+    {
+      $flight = Flight::where('id', '=', $flightId)->get();
+      //dd($flight);
+      //$transaction = new Transaction();
+      echo $flight->getId();
+      //$transaction->service_name = $flight->
+      //$transaction->service_id = $request->service_id;
+      //$transaction->user_id = $request->user_id;
+      //$transaction->points = $request->points;
+      //$transaction->points_given = 'false';
+      //$transaction->price = $request->price;
+      //$transaction->status = 'En Carrito';
+      //$transaction->save();
+    }
 
     public function myShopping()
     {
@@ -49,6 +66,7 @@ class TransactionController extends Controller
     {
         //
     }
+
 
     /**
      * Store a newly created resource in storage.

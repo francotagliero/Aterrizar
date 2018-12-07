@@ -98,7 +98,7 @@
                     <td>{{ $flight->economy_seats }}</td>
                     <td>{{ $flight->business_seats }}</td>
                     <td>{{ $flight->first_class_seats }}</td>
-                    <td><a class="btn btn-primary" href="#" role="button">Añadir al carrito</a></td>
+                    <td><a class="btn btn-primary" href="{{ URL('/addFlightToCart/'.$flight->id )}}" role="button">Añadir al carrito</a></td>
                 </tr>
                 @endforeach
             </tbody>

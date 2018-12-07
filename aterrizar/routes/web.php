@@ -32,5 +32,6 @@ Route::get('/hotels/{hotel}', 'HotelController@show')->name('hotels.show');
 Route::get('/agencies/{agency}', 'CarRentalAgencyController@show')->name('agencies.show');
 Route::post('/flights/search', 'FlightController@search')->name('flights.search');
 Route::post('/cars/search', 'CarController@search')->name('cars.search');
-Route::get('/miCarrito', 'TransactionController@miCarrito');
+Route::get('/myCart', 'TransactionController@myCart');
 Route::get('/myShopping', 'TransactionController@myShopping');
+//Route::get('/addFlightToCart/{id}', 'TransactionController@addFlightToCart');
