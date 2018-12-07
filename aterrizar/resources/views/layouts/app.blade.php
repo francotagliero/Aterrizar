@@ -51,7 +51,7 @@
               <a class="nav-link" href="myCart"> Mi Carrito </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"> Mis Compras </a>
+              <a class="nav-link" href="myShopping"> Mis Compras </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/myprofile"> Mi Perfil </a>
