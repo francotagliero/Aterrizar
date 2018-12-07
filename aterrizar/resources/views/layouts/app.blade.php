@@ -104,13 +104,13 @@
       <ul class="navbar-nav ml-auto">
         <!-- Authentication Links -->
         @guest
-        <a class="nav-link" href="flights"> Buscar Vuelos </a>
+        <a class="nav-link" href="../flights"> Buscar Vuelos </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="cars"> Buscar Autos </a>
+        <a class="nav-link" href="../cars"> Buscar Autos </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"> Buscar Hoteles </a>
+        <a class="nav-link" href="../rooms"> Buscar Hoteles </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

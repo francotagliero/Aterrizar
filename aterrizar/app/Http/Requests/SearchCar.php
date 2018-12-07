@@ -24,7 +24,7 @@ class SearchCar extends FormRequest
     public function rules()
     {
         return [
-            'from' => 'required|different:to|exists:cities,id',
+            'from' => 'required|exists:cities,id',
             'to' => 'required|exists:cities,id',
             'date_rent' => 'required|date|different:date_return',
             'date_return' =>'required|date|after:date_rent',    

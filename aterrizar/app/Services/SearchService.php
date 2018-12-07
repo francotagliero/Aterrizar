@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\{AdminPanel, Car, Flight, Room, CarRentalAgency};
 use Carbon\Carbon;
+use \Datetime;
+
 
 class SearchService {
 
@@ -15,97 +17,110 @@ class SearchService {
             ['city_from', '=', $from],
             ['date', '=', $date],
             [$this->seatsField($class), '>=', $seats]
-        ])->orderBy('price', 'ASC')->get() as $flight_from) {
+            ])->orderBy('price', 'ASC')->get() as $flight_from) {
 
             foreach (Flight::where([
                 ['city_from', '=', $flight_from->to->id],
                 ['city_to', '=', $to],
                 ['date', '>=', $date],
                 [$this->seatsField($class), '>=', $seats]
-            ])->get() as $flight_to) {
+                ])->get() as $flight_to) {
 
                 if (empty($flight_to)) { continue; }
-                $gap = $this->getGap($flight_from, $flight_to);
-                if ($gap < 0) { continue; }
-                if ($gap > $settings->max_gap) { continue; }
-                $duration = $gap + floor(
-                    ($this->durationInMinutes($flight_to->duration) + $this->durationInMinutes($flight_from->duration)) 
-                    / 60
+            $gap = $this->getGap($flight_from, $flight_to);
+            if ($gap < 0) { continue; }
+            if ($gap > $settings->max_gap) { continue; }
+            $duration = $gap + floor(
+                ($this->durationInMinutes($flight_to->duration) + $this->durationInMinutes($flight_from->duration)) 
+                / 60
                 );
-                if ($duration > $settings->max_flight_duration) { continue; }
-                $flights[] = $flight_from;
-                $flights[] = $flight_to;
-            }
+            if ($duration > $settings->max_flight_duration) { continue; }
+            $flights[] = $flight_from;
+            $flights[] = $flight_to;
         }
-        return $flights;
     }
+    return $flights;
+}
 
 
-    private function getGap($flight_from, $flight_to) {
+private function getGap($flight_from, $flight_to) {
 
-        $from_dt = new Carbon("{$flight_from->date->format('Y-m-d')} {$flight_from->time}");
-        $to_dt = new Carbon("{$flight_to->date->format('Y-m-d')} {$flight_to->time}");
-        $from_dt->addHours(substr($flight_from->duration, 0, 2));
-        $from_dt->addMinutes(substr($flight_from->duration, 3, 2));
+    $from_dt = new Carbon("{$flight_from->date->format('Y-m-d')} {$flight_from->time}");
+    $to_dt = new Carbon("{$flight_to->date->format('Y-m-d')} {$flight_to->time}");
+    $from_dt->addHours(substr($flight_from->duration, 0, 2));
+    $from_dt->addMinutes(substr($flight_from->duration, 3, 2));
 
-        return $from_dt->diffInHours($to_dt, false);
-    }
+    return $from_dt->diffInHours($to_dt, false);
+}
 
 
-    private function durationInMinutes($duration) {
+private function durationInMinutes($duration) {
 
-        $duration = explode(':', $duration);
-        return $duration[0] * 60 + $duration[1];
-    }
+    $duration = explode(':', $duration);
+    return $duration[0] * 60 + $duration[1];
+}
 
-    
-    public function nonStopFlights($from, $to, $date, $class, $seats) {
-        
-        return Flight::where([
-            ['city_from', '=', $from],
-            ['city_to', '=', $to],
-            ['date', '=', $date],
-            [$this->seatsField($class), '>=', $seats]
+
+public function nonStopFlights($from, $to, $date, $class, $seats) {
+
+    return Flight::where([
+        ['city_from', '=', $from],
+        ['city_to', '=', $to],
+        ['date', '=', $date],
+        [$this->seatsField($class), '>=', $seats]
         ])->orderBy('price', 'ASC')->get()->all();
+}
+
+
+private function seatsField($class) {
+
+    switch ($class) {
+        case 'Economy': return 'economy_seats';
+        case 'Business': return 'business_seats';
+        case 'First': return 'first_class_seats';
     }
+}
 
 
-    private function seatsField($class) {
+public function rooms() {
 
-        switch ($class) {
-            case 'Economy': return 'economy_seats';
-            case 'Business': return 'business_seats';
-            case 'First': return 'first_class_seats';
-        }
-    }
-
-
-    public function rooms() {
-        
         //
+}
+
+public function cars($from, $to, $date_rent, $date_return, $brand, $agency) {
+
+
+    $days=$this->getDaysDifference($date_rent,$date_return);
+
+    $agencyId=$this->getAgencyIdByCity($from,$agency);
+    $cars=  Car::select('model','segment','price','range','brand_id','agency_id')->where([
+        ['agency_id', '=', $agencyId],
+        ['brand_id', '=', $brand]
+        ])->get();
+    foreach ($cars as &$key) {
+        $key['price']=$key['price']*$days;
     }
+    return $cars;
+}
 
-    public function cars($from, $to, $date_rent, $date_return, $brand, $agency) {
+public function getDaysDifference($from, $to){
+    $from= new DateTime($from);
+    $to= new DateTime($to);
+    $days = $to->diff($from)->format("%a");
+    return $days;
+}
 
-        $agencyId=$this->getAgencyIdByCity($from,$agency);
-        return Car::where([
-            ['agency_id', '=', $agencyId],
-            ['brand_id', '=', $brand]
-        ])->orderBy('price', 'ASC')->get();
-    }
+public function getAgencyIdByCity($from, $agency){
 
+    $agencyName= CarRentalAgency::select('name')->where([
+      ['id', '=', $agency]
+      ])->get()->toArray();
 
-    public function getAgencyIdByCity($from, $agency){
-        
-        $agencyName= CarRentalAgency::select('name')->where([
-              ['id', '=', $agency]
-              ])->get()->toArray();
-
-        return CarRentalAgency::select('id')->where([
-              ['city_id', '=', $from],
-              ['name', '=', $agencyName]
-            ])->get()->toArray();
-    }
+    return CarRentalAgency::select('id')->where([
+      ['city_id', '=', $from],
+      ['name', '=', $agencyName]
+      ])->get()->toArray();
+}
 
 
 }
