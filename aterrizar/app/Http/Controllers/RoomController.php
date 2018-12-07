@@ -22,6 +22,8 @@ class RoomController extends Controller
                 $final= array_merge($final, $temp);
             }
             $final=array_unique($final);
+            $final = array_combine($final, $final);
+
 
         $rooms = $request->old('rooms');
         if ($rooms !== null) {
