@@ -87,7 +87,11 @@
                     <td>{{ number_format($car->price, 2, ',', '') }}</td>
                     <td>{{ $car->range }}</td>
                     <td><a href="{{ route('agencies.show', $car->agency->id) }}">{{ $car->agency->name }}</a></td>
+                    @if(Auth::user())
+                    @if(Auth::user()->hasRole('user'))
                     <td><a class="btn btn-primary" href="#" role="button">Añadir al carrito</a></td>
+                    @endif
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
