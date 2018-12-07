@@ -67,5 +67,4 @@ class CarController extends Controller
         return back()->withInput($input);
     }
 
-
 }
