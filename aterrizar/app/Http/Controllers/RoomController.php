@@ -17,13 +17,14 @@ class RoomController extends Controller
 
         $amenities= Hotel::select('amenities')->get();
         $final=[]; 
-        foreach ($amenities as $amenitie) {
-                $temp=explode(", ",$amenitie['amenities']);
-                $final= array_merge($final, $temp);
-            }
-            $final=array_unique($final);
-            $final = array_combine($final, $final);
+        $amenities = (array) json_decode(json_encode($amenities), true);
 
+        $objTmp = (object) array('aFlat' => array());
+
+        array_walk_recursive($amenities, create_function('&$v, $k, &$t', '$t->aFlat[] = $v;'), $objTmp);
+        $final= array_unique($objTmp->aFlat);
+        $final=array_combine($final, $final);
+    
 
         $rooms = $request->old('rooms');
         if ($rooms !== null) {

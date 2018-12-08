@@ -81,10 +81,19 @@ private function seatsField($class) {
     }
 }
 
+/*
+public function getHotelIdswithAmenities($amenities){
+    $makeQuery= "";
+    foreach ($amenities as $amenitie) {
+        $makeQuery = "like" . $makeQuery . "%" .$amenitie . "%"
+    }
+        return $makeQuery;
+
+}
+*/
 
 public function rooms($city, $capacity, $from, $to, $amenities) {
-        $hotels=$this->getHotelIdswithAmenities($amenities);
-
+      //  $hotels=$this->getHotelIdswithAmenities($amenities);
         return Room::where([['capacity', '>=', $capacity] ])->get()->all();
 }
 
