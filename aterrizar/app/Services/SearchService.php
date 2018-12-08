@@ -82,9 +82,10 @@ private function seatsField($class) {
 }
 
 
-public function rooms() {
+public function rooms($city, $capacity, $from, $to, $amenities) {
+        $hotels=$this->getHotelIdswithAmenities($amenities);
 
-        //
+        return Room::where([['capacity', '>=', $capacity] ])->get()->all();
 }
 
 public function cars($from, $to, $date_rent, $date_return, $brand, $agency) {

@@ -39,16 +39,16 @@
             @if(Auth::user())
             @if(Auth::user()->hasRole('user'))
             <li class="nav-item">
-              <a class="nav-link" href="flights"> Buscar Vuelos </a>
+              <a class="nav-link" href="../flights"> Buscar Vuelos </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="cars"> Buscar Autos </a>
+              <a class="nav-link" href="../cars"> Buscar Autos </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"> Buscar Hoteles </a>
+              <a class="nav-link" href="../rooms"> Buscar Hoteles </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="myCart"> Mi Carrito </a>
+              <a class="nav-link" href="../myCart"> Mi Carrito </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="myShopping"> Mis Compras </a>
