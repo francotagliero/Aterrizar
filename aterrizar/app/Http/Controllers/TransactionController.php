@@ -26,14 +26,13 @@ class TransactionController extends Controller
         return view('transactions.index')->with('transactions', $transactions);
     }
 
-    public function myCart()
+    public function myCart(Request $request)
     {
-      $transactions = Transaction::where([
-                                         ['status', '=', 'En Carrito'],
-                                         ['user_id', '=', Auth::user()->id],
-                                        ])->get();
-      return view('myCart.index')->with('transactions', $transactions);
-      }
+        $request->user()->authorizeRoles('user');
+
+        $transactions = Transaction::forLoggedUser()->inCart()->get();
+        return view('myCart.index')->with('transactions', $transactions);
+    }
 
     
     public function addFlightToCart(Request $request, $class, $seats, $id, $stop = null) {
@@ -77,13 +76,12 @@ class TransactionController extends Controller
       return $this->myShopping();
     }
 
-    public function myShopping()
+    public function myShopping(Request $request)
     {
-      $transactions = Transaction::where([
-                                         ['status', '<>', 'En Carrito'],
-                                         ['user_id', '=', Auth::user()->id],
-                                        ])->get();
-      return view('myShopping.index')->with('transactions', $transactions);
+        $request->user()->authorizeRoles('user');
+
+        $transactions = Transaction::forLoggedUser()->bought()->get();
+        return view('myShopping.index')->with('transactions', $transactions);
     }
 
 
