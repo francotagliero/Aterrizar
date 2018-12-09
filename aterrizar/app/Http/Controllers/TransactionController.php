@@ -63,6 +63,26 @@ class TransactionController extends Controller
     }
 
 
+    public function addCarToCart(Request $request /*...*/) {
+
+        $request->user()->authorizeRoles('user');
+
+        // ...
+
+        return redirect('myCart');
+    }
+    
+    
+    public function addRoomToCart(Request $request /*...*/) {
+
+        $request->user()->authorizeRoles('user');
+
+        // ...
+
+        return redirect('myCart');
+    }
+
+
     private function getPoints($price) {
 
         return floor($price * AdminPanel::find(1)->points_per_peso);
