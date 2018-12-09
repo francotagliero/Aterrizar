@@ -81,64 +81,52 @@ private function seatsField($class) {
     }
 }
 
-    /*
-    public function getHotelIdswithAmenities($amenities){
-        $makeQuery= "";
-        foreach ($amenities as $amenitie) {
-            $makeQuery = "like" . $makeQuery . "%" .$amenitie . "%"
-        }
-            return $makeQuery;
+public function rooms($city, $capacity, $from, $to, $amenities) {
+    $rooms = Room::where([['capacity', '>=', $capacity] ])->get()->all();
 
-    }
-    */
-
-    public function rooms($city, $capacity, $from, $to, $amenities) {
-        //  $hotels=$this->getHotelIdswithAmenities($amenities);
-        $rooms = Room::where([['capacity', '>=', $capacity] ])->get()->all();
-
-        return array_filter($rooms, function ($room) use ($amenities) {
-            $roomAmenities = json_decode($room->amenities);
-            foreach ($amenities as $amenity) {
-                if (! in_array($amenity, $roomAmenities)) {
-                    return false;
-                }
+    return array_filter($rooms, function ($room) use ($amenities) {
+        $roomAmenities = $room->hotel->amenities;
+        foreach ($amenities as $amenity) {
+            if (! in_array($amenity, $roomAmenities)) {
+                return false;
             }
-            return true;
-        });
-    }
-
-    public function cars($from, $to, $date_rent, $date_return, $brand, $agency) {
-
-
-        $days=$this->getDaysDifference($date_rent,$date_return);
-
-        $agencyId=$this->getAgencyIdByCity($from,$agency);
-        $cars=  Car::select('model','segment','price','range','brand_id','agency_id')->where([
-            ['agency_id', '=', $agencyId],
-            ['brand_id', '=', $brand]
-            ])->get();
-        foreach ($cars as &$key) {
-            $key['price']=$key['price']*$days;
         }
-        return $cars;
+        return true;
+    });
+}
+
+public function cars($from, $to, $date_rent, $date_return, $brand, $agency) {
+
+
+    $days=$this->getDaysDifference($date_rent,$date_return);
+
+    $agencyId=$this->getAgencyIdByCity($from,$agency);
+    $cars=  Car::select('model','segment','price','range','brand_id','agency_id')->where([
+        ['agency_id', '=', $agencyId],
+        ['brand_id', '=', $brand]
+        ])->get();
+    foreach ($cars as &$key) {
+        $key['price']=$key['price']*$days;
     }
+    return $cars;
+}
 
-    public function getDaysDifference($from, $to){
-        $from= new DateTime($from);
-        $to= new DateTime($to);
-        $days = $to->diff($from)->format("%a");
-        return $days;
-    }
+public function getDaysDifference($from, $to){
+    $from= new DateTime($from);
+    $to= new DateTime($to);
+    $days = $to->diff($from)->format("%a");
+    return $days;
+}
 
-    public function getAgencyIdByCity($from, $agency){
+public function getAgencyIdByCity($from, $agency){
 
-        $agencyName= CarRentalAgency::select('name')->where([
-            ['id', '=', $agency]
-            ])->get()->toArray();
+    $agencyName= CarRentalAgency::select('name')->where([
+        ['id', '=', $agency]
+        ])->get()->toArray();
 
-        return CarRentalAgency::select('id')->where([
-            ['city_id', '=', $from],
-            ['name', '=', $agencyName]
-            ])->get()->toArray();
-    }
+    return CarRentalAgency::select('id')->where([
+        ['city_id', '=', $from],
+        ['name', '=', $agencyName]
+        ])->get()->toArray();
+}
 }
