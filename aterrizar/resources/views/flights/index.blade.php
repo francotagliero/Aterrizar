@@ -80,27 +80,45 @@
                     <th>Duración</th>
                     <th>Precio</th>
                     <th>Aerolínea</th>
+                    @if (old('class') == 'Economy')
                     <th>Capacidad Económica</th>
+                    @elseif (old('class') == 'Business')
                     <th>Capacidad Ejecutiva</th>
+                    @elseif (old('class') == 'First')
                     <th>Capacidad Primera clase</th>
+                    @endif
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($flights as $flight)
+                @foreach($flight['stops'] as $stop)
                 <tr>
-                    <td>{{ $flight->from->name }}</td>
-                    <td>{{ $flight->to->name }}</td>
-                    <td>{{ Carbon\Carbon::parse($flight->date)->format('Y-m-d') }}</td>
-                    <td>{{ Carbon\Carbon::parse($flight->time)->format('H:i') }}</td>
-                    <td>{{ Carbon\Carbon::parse($flight->duration)->format('H:i') }}</td>
-                    <td>{{ number_format($flight->price, 2, ',', '.') }}</td>
-                    <td>{{ $flight->airline->name }}</td>
-                    <td>{{ $flight->economy_seats }}</td>
-                    <td>{{ $flight->business_seats }}</td>
-                    <td>{{ $flight->first_class_seats }}</td>
-                    <td><a class="btn btn-primary" href="{{ URL('/addFlightToCart/'.$flight->id )}}" role="button">Añadir al carrito</a></td>
+                    <td>{{ $stop->from->name }}</td>
+                    <td>{{ $stop->to->name }}</td>
+                    <td>{{ Carbon\Carbon::parse($stop->date)->format('Y-m-d') }}</td>
+                    <td>{{ Carbon\Carbon::parse($stop->time)->format('H:i') }}</td>
+                    <td>{{ Carbon\Carbon::parse($stop->duration)->format('H:i') }}</td>
+                    @if($loop->count == 1)
+                    <td>{{ number_format($flight['price'], 2, ',', '.') }}</td>
+                    @elseif($loop->first)
+                    <td rowspan="{!! $loop->count !!}" class="align-middle">{{ number_format($flight['price'], 2, ',', '.') }}</td>
+                    @endif
+                    <td>{{ $stop->airline->name }}</td>
+                    @if (old('class') == 'Economy')
+                    <td>{{ $stop->economy_seats }}</td>
+                    @elseif (old('class') == 'Business')
+                    <td>{{ $stop->business_seats }}</td>
+                    @elseif (old('class') == 'First')
+                    <td>{{ $stop->first_class_seats }}</td>
+                    @endif
+                    @if($loop->count == 1)
+                    <td><a class="btn btn-primary" href="#" role="button">Añadir al carrito</a></td>
+                    @elseif($loop->first)
+                    <td rowspan="{!! $loop->count !!}" class="align-middle"><a class="btn btn-primary" href="#" role="button">Añadir al carrito</a></td>
+                    @endif
                 </tr>
+                @endforeach
                 @endforeach
             </tbody>
         </table>
