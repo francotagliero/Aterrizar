@@ -23,7 +23,12 @@ class SearchService {
                 $flights[] = [
                     'class' => $class,
                     'price' => $flight_from->priceForClass($class),
-                    'stops' => [ $flight_from ]
+                    'stops' => [ $flight_from ],
+                    'route' => route('flights.addtocart', [
+                        'class' => $class,
+                        'seats' => $seats,
+                        'id'    => $flight_from->id
+                    ])
                 ];
             }
             else {
@@ -41,7 +46,13 @@ class SearchService {
                         'class' => $class,
                         'price' => ($flight_from->priceForClass($class) + $flight_to->priceForClass($class)) 
                                     * (1 - $settings->percentage_stopover),
-                        'stops' => [ $flight_from, $flight_to ]
+                        'stops' => [ $flight_from, $flight_to ],
+                        'route' => route('flights.addtocart', [
+                            'class' => $class,
+                            'seats' => $seats,
+                            'id'    => $flight_from->id,
+                            'stop'  => $flight_to->id
+                        ])
                     ];
                 }
             }
@@ -81,7 +92,12 @@ class SearchService {
             $flights[] = [
                 'class' => $class,
                 'price' => $flight->priceForClass($class),
-                'stops' => [ $flight ]
+                'stops' => [ $flight ],
+                'route' => route('flights.addtocart', [
+                    'class' => $class,
+                    'seats' => $seats,
+                    'id'    => $flight->id
+                ])
             ];
         }
         usort($flights, function ($aFlight, $anotherFlight) {
@@ -91,20 +107,20 @@ class SearchService {
     }
 
 public function rooms($city, $capacity, $from, $to, $amenities) {
-    $rooms = Room::join('hotels', 'hotels.id', '=', 'rooms.hotel_id')
-    ->where([['capacity', '>=', $capacity],['city_id', '=', $city],['rooms.from', '>=', $from]])->get()->all();
-    if(isset($amenities)){
-    return array_filter($rooms, function ($room) use ($amenities) {
-        $roomAmenities = $room->hotel->amenities;
-        foreach ($amenities as $amenity) {
-            if (! in_array($amenity, $roomAmenities)) {
-                return false;
-            }
-            return true;
-        });}
-        else{
-            return $rooms;
-        }
+    // $rooms = Room::join('hotels', 'hotels.id', '=', 'rooms.hotel_id')
+    // ->where([['capacity', '>=', $capacity],['city_id', '=', $city],['rooms.from', '>=', $from]])->get()->all();
+    // if(isset($amenities)){
+    // return array_filter($rooms, function ($room) use ($amenities) {
+    //     $roomAmenities = $room->hotel->amenities;
+    //     foreach ($amenities as $amenity) {
+    //         if (! in_array($amenity, $roomAmenities)) {
+    //             return false;
+    //         }
+    //         return true;
+    //     });}
+    //     else{
+    //         return $rooms;
+    //     }
     }
 
     public function cars($from, $to, $date_rent, $date_return, $brand, $agency) {

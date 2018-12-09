@@ -113,9 +113,9 @@
                     <td>{{ $stop->first_class_seats }}</td>
                     @endif
                     @if($loop->count == 1)
-                    <td><a class="btn btn-primary" href="#" role="button">Añadir al carrito</a></td>
+                    <td><a class="btn btn-primary" href="{{ $flight['route'] }}" role="button">Añadir al carrito</a></td>
                     @elseif($loop->first)
-                    <td rowspan="{!! $loop->count !!}" class="align-middle"><a class="btn btn-primary" href="#" role="button">Añadir al carrito</a></td>
+                    <td rowspan="{!! $loop->count !!}" class="align-middle"><a class="btn btn-primary" href="{{ $flight['route'] }}" role="button">Añadir al carrito</a></td>
                     @endif
                 </tr>
                 @endforeach
