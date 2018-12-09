@@ -83,7 +83,7 @@ private function seatsField($class) {
 
 public function rooms($city, $capacity, $from, $to, $amenities) {
     $rooms = Room::where([['capacity', '>=', $capacity] ])->get()->all();
-
+    if(isset($amenities)){
     return array_filter($rooms, function ($room) use ($amenities) {
         $roomAmenities = $room->hotel->amenities;
         foreach ($amenities as $amenity) {
@@ -92,7 +92,10 @@ public function rooms($city, $capacity, $from, $to, $amenities) {
             }
         }
         return true;
-    });
+    });}
+    else{
+        return $rooms;
+    }
 }
 
 public function cars($from, $to, $date_rent, $date_return, $brand, $agency) {
