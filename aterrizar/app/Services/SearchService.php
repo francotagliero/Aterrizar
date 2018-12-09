@@ -17,7 +17,6 @@ class SearchService {
         foreach (Flight::fromCity(City::find($from))
             ->forDate($date)
             ->havingSeats($class, $seats)
-            ->orderBy('price', 'ASC')
             ->get() as $flight_from) {
 
             if ($flight_from->to->id == $to) {
@@ -47,6 +46,9 @@ class SearchService {
                 }
             }
         }
+        usort($flights, function ($aFlight, $anotherFlight) {
+            return $aFlight['price'] <=> $anotherFlight['price'];
+        });
         return $flights;
     }
 
@@ -74,7 +76,6 @@ class SearchService {
             ->toCity(City::find($to))
             ->forDate($date)
             ->havingSeats($class, $seats)
-            ->orderBy('price', 'ASC')
             ->get() as $flight) {
 
             $flights[] = [
@@ -83,6 +84,9 @@ class SearchService {
                 'stops' => [ $flight ]
             ];
         }
+        usort($flights, function ($aFlight, $anotherFlight) {
+            return $aFlight['price'] <=> $anotherFlight['price'];
+        });
         return $flights;
     }
 
