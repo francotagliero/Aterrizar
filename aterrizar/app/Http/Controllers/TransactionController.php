@@ -33,8 +33,9 @@ class TransactionController extends Controller
 
     public function addFlightToCart($flightId)
     {
-      //$flight = Flight::where('id', '=', $flightId)->get();
-
+      $flight = Flight::where('id', '=', $flightId)->get();
+      
+      dd($flight);
     }
 
     public function completeTransaction($idTransaction)

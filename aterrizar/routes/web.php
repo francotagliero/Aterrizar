@@ -36,4 +36,4 @@ Route::post('/rooms/search', 'RoomController@search')->name('rooms.search');
 Route::get('/myCart', 'TransactionController@myCart');
 Route::get('/myShopping', 'TransactionController@myShopping');
 Route::get('/completeTransaction/{id}', 'TransactionController@completeTransaction');
-//Route::get('/addFlightToCart/{id}', 'TransactionController@addFlightToCart');
+Route::get('/addFlightToCart/{id}', 'TransactionController@addFlightToCart');
