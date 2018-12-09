@@ -91,4 +91,10 @@ class Flight extends Model
         }
         return $factor * $this->price;
     }
+
+
+    public function transaction() {
+
+        return $this->morphOne('App\Transaction', 'service');
+    }
 }

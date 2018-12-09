@@ -10,4 +10,10 @@ class Room extends Model
 
         return $this->belongsTo('App\Hotel', 'hotel_id');
     }
+
+    
+    public function transaction() {
+
+        return $this->morphOne('App\Transaction', 'service');
+    }
 }

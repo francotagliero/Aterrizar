@@ -19,4 +19,10 @@ class Car extends Model
 
         return $this->belongsTo('App\CarBrand', 'brand_id');
     }
+
+    
+    public function transaction() {
+
+        return $this->morphOne('App\Transaction', 'service');
+    }
 }

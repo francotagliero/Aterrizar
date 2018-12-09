@@ -29,7 +29,7 @@
                     <div class="form-group row">
                         {!! Form::label('capacity', 'Cantidad de Personas', ['class' => 'col-sm-2 col-form-label']) !!}
                         <div class="col-sm-10">
-                            {!! Form::number('capacity', '0', null, ['class' => 'form-control']) !!}
+                            {!! Form::number('capacity', '1', ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="form-group row">

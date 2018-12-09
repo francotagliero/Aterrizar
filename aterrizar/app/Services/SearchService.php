@@ -86,17 +86,15 @@ class SearchService {
         return $flights;
     }
 
-
-    public function rooms($city, $capacity, $from, $to, $amenities) {
-        $rooms = Room::join('hotels', 'hotels.id', '=', 'rooms.hotel_id')
-        ->where([['capacity', '>=', $capacity],['city_id', '=', $city] ])->get()->all();
-        if(isset($amenities)){
-        return array_filter($rooms, function ($room) use ($amenities) {
-            $roomAmenities = $room->hotel->amenities;
-            foreach ($amenities as $amenity) {
-                if (! in_array($amenity, $roomAmenities)) {
-                    return false;
-                }
+public function rooms($city, $capacity, $from, $to, $amenities) {
+    $rooms = Room::join('hotels', 'hotels.id', '=', 'rooms.hotel_id')
+    ->where([['capacity', '>=', $capacity],['city_id', '=', $city],['rooms.from', '>=', $from]])->get()->all();
+    if(isset($amenities)){
+    return array_filter($rooms, function ($room) use ($amenities) {
+        $roomAmenities = $room->hotel->amenities;
+        foreach ($amenities as $amenity) {
+            if (! in_array($amenity, $roomAmenities)) {
+                return false;
             }
             return true;
         });}
