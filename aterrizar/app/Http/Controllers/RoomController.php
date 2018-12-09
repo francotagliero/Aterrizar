@@ -10,64 +10,77 @@ use App\Services\SearchService;
 
 class RoomController extends Controller
 {
+
+public function array_flatten($array) { 
+    if (!is_array($array)) { 
+        return false; 
+    } 
+    $result = array(); 
+    foreach ($array as $key => $value) { 
+        if (is_array($value)) { 
+          $result = array_merge($result, array_flatten($value)); 
+    } else { 
+          $result[$key] = $value; 
+    } 
+    } 
+    return $result; 
+}    
+
+
+public function index(Request $request) {
+
+    $cities = City::pluck('name', 'id');
+
+    $amenities= Hotel::select('amenities')->get();
+    $amenities = (array) json_decode($amenities, true);
+    $amenities = $this->array_flatten($amenities);
+    $final= array_unique($amenities);
+    $final=array_combine($final, $final);
     
-    public function index(Request $request) {
 
-        $cities = City::pluck('name', 'id');
-
-        $amenities= Hotel::select('amenities')->get();
-        $final=[]; 
-        foreach ($amenities as $amenitie) {
-                $temp=explode(", ",$amenitie['amenities']);
-                $final= array_merge($final, $temp);
-            }
-            $final=array_unique($final);
-            $final = array_combine($final, $final);
-
-
-        $rooms = $request->old('rooms');
-        if ($rooms !== null) {
+    $rooms = $request->old('rooms');
+    if ($rooms !== null) {
             // Keep search on refresh
-            $request->session()->reflash();
-            return view('rooms.index')->with(compact('rooms', 'cities','final'));
-        }
-            return view('rooms.index')->with(compact('cities','final'));
+        $request->session()->reflash();
+        return view('rooms.index')->with(compact('rooms', 'cities','final'));
     }
-    
-    public function create() {
+    return view('rooms.index')->with(compact('cities','final'));
+}
 
-        $hotels = [];
-        foreach (Hotel::all() as $hotel) {
-            $hotels[$hotel->id] = "{$hotel->name} - {$hotel->city->name}";
-        }
-        return view('rooms.create')->with(compact('hotels'));
+public function create() {
+
+    $hotels = [];
+    foreach (Hotel::all() as $hotel) {
+        $hotels[$hotel->id] = "{$hotel->name} - {$hotel->city->name}";
     }
+    return view('rooms.create')->with(compact('hotels'));
+}
 
 
-    public function store(StoreRoom $request) {
+public function store(StoreRoom $request) {
 
-        $room = new Room();
-        $room->hotel()->associate(Hotel::find($request->hotel));
-        $room->rooms = $request->rooms;
-        $room->from = $request->from;
-        $room->to = $request->to;
-        $room->save();
+    $room = new Room();
+    $room->hotel()->associate(Hotel::find($request->hotel));
+    $room->rooms = $request->rooms;
+    $room->from = $request->from;
+    $room->to = $request->to;
+    $room->save();
 
-        return redirect('rooms');
-    }
+    return redirect('rooms');
+}
 
-    public function search(SearchRoom $request, SearchService $search) {
+public function search(SearchRoom $request, SearchService $search) {
 
-            $rooms = $search->rooms(
-                $request->city,
-                $request->capacity,
-                $request->from,
-                $request->to,
-                $request->amenities
-            );
-        $input = $request->all();
-        $input['rooms'] = $rooms;
-        
-        return back()->withInput($input);
-    }
+    $rooms = $search->rooms(
+        $request->city,
+        $request->capacity,
+        $request->from,
+        $request->to,
+        $request->amenities
+        );
+    $input = $request->all();
+    $input['rooms'] = $rooms;
+
+    return back()->withInput($input);
+}
 }

@@ -12,6 +12,7 @@ class CitiesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('cities')->truncate();
         $cities = [ 
             ['name' => 'Buenos Aires', 
             'state' => 'Ciudad de Buenos Aires',

@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProfile;
 
 class UserController extends Controller
 {  
@@ -22,7 +23,19 @@ class UserController extends Controller
     	  }
     }
 
-    public function update(){
-    	return view('myProfile.update');
+    public function create() {
+
+        return view('myprofile.create');
+    } 
+
+
+       public function store(StoreProfile $request) {
+
+        $id = Auth::user()->id;
+        $dni= $request->dni;
+        $username= $request->username;
+        User::where('id', $id)->update(['dni'=>$dni, 'username'=>$username]);
+
+        return redirect('myprofile');
     }
 }

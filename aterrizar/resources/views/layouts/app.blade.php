@@ -71,7 +71,7 @@
           </li>
           @if (empty(Auth::user()->dni))
           <li class="nav-item">
-            <a class="nav-link" href="/myprofile"> <mark> Agregar Información Faltante </mark> </a>
+            <a class="nav-link" href="/myprofile/create"> <mark> Agregar Información Faltante </mark> </a>
           </li>
           @endif
           <li class="nav-item">

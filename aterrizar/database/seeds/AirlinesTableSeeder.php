@@ -12,6 +12,7 @@ class AirlinesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('airlines')->truncate();
         $airlines = [ 
             ['name' => 'Aerolíneas Argentinas'],
             ['name' => 'LATAM Airlines'],
