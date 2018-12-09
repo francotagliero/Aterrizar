@@ -75,7 +75,9 @@ class Flight extends Model
     
     public function durationInMinutes() {
         
-        return Carbon::createFromTimeString($this->duration)->diffInMinutes();
+        return Carbon::createFromTimeString($this->duration)->diffInMinutes(
+            Carbon::createFromTimeString('00:00:00')
+        );
     }
     
     
