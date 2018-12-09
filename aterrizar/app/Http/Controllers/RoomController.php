@@ -10,19 +10,20 @@ use App\Services\SearchService;
 
 class RoomController extends Controller
 {
-    function array_flatten($array) { 
-      if (!is_array($array)) { 
+
+public function array_flatten($array) { 
+    if (!is_array($array)) { 
         return false; 
     } 
     $result = array(); 
     foreach ($array as $key => $value) { 
         if (is_array($value)) { 
           $result = array_merge($result, array_flatten($value)); 
-      } else { 
+    } else { 
           $result[$key] = $value; 
-      } 
-  } 
-  return $result; 
+    } 
+    } 
+    return $result; 
 }    
 
 
