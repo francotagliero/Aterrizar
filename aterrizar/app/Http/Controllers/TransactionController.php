@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Transactions;
+use App\{AdminPanel, Flight, Transaction};
 use Illuminate\Http\Request;
-use App\Transaction;
 use Illuminate\Support\Facades\Auth;
-use App\Flight;
 
 class TransactionController extends Controller
 {
+
+    public function __construct() {
+        
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,12 +35,40 @@ class TransactionController extends Controller
       return view('myCart.index')->with('transactions', $transactions);
       }
 
-    public function addFlightToCart($flightId)
-    {
-      $flight = Flight::where('id', '=', $flightId)->get();
-      
-      dd($flight);
+    
+    public function addFlightToCart(Request $request, $class, $seats, $id, $stop = null) {
+
+        $request->user()->authorizeRoles('user');
+
+        $flight = Flight::find($id);
+        while ($seats) {
+            $transaction = new Transaction();
+            $transaction->service()->associate($flight);
+            $transaction->user()->associate(Auth::user());
+            $transaction->price = $flight->priceForClass($class);
+            $transaction->from = $flight->date;
+            $transaction->to = $flight->date;
+            $transaction->extra = [ 'class' => $class ];
+            if ($stop !== null) {
+                $stop = Flight::find($stop);
+                $transaction->price = ($transaction->price + $stop->priceForClass($class)) 
+                                    * (1 - AdminPanel::find(1)->percentage_stopover);
+                $transaction->extra = array_merge($transaction->extra, ['stop' => $stop->id]);
+            }
+            $transaction->points = $this->getPoints($transaction->price);
+            $transaction->points_given = false;
+            $transaction->save();
+            $seats--;
+        }
+        return redirect('myCart');
     }
+
+
+    private function getPoints($price) {
+
+        return floor($price * AdminPanel::find(1)->points_per_peso);
+    }
+
 
     public function completeTransaction($idTransaction)
     {

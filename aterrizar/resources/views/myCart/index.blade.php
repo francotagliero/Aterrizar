@@ -20,7 +20,7 @@
                 @foreach($transactions as $transaction)
                 <tr>
                     <td>{{ $transaction->id }}</td>
-                    <td>{{ $transaction->service_name }}</td>
+                    <td>{{ $transaction->service->service_type }}</td>
                     <td>{{ $transaction->service_id}}</td>
                     <td>{{ $transaction->points }}</td>
                     <td>{{ $transaction->points_given }}</td>
