@@ -25,4 +25,10 @@ class Car extends Model
 
         return $this->morphOne('App\Transaction', 'service');
     }
+
+    
+    public function getServiceTypeAttribute() {
+
+        return (new \ReflectionClass($this))->getShortName();
+    }
 }
