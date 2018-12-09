@@ -71,7 +71,6 @@ class FlightController extends Controller
                 $request->class,
                 $request->seats
             );
-            // Merge resultset with non-stop ?
         }
         $input = $request->all();
         $input['flights'] = $flights;
