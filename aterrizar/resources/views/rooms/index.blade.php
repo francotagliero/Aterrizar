@@ -75,7 +75,7 @@
                 <tr>
                     <td><a href="{{ route('hotels.show', $room->id) }}">{{ $room->hotel->name }}</a></td>
                     <td>{{ $room->capacity }}</td>
-                    <td>{{ number_format($room->hotel->price, 2, ',', '') }}</td>
+                    <td>{{ number_format($room->hotel->price*$room->capacity, 2, ',', '') }}</td>
                     @if(Auth::user())
                     @if(Auth::user()->hasRole('user'))
                     <td><a class="btn btn-primary" href="#" role="button">Añadir al carrito</a></td>

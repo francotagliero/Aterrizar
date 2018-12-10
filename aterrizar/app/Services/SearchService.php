@@ -82,8 +82,13 @@ private function seatsField($class) {
 }
 
 public function rooms($city, $capacity, $from, $to, $amenities) {
-    $rooms = Room::join('hotels', 'hotels.id', '=', 'rooms.hotel_id')
-    ->where([['capacity', '>=', $capacity],['city_id', '=', $city],['rooms.from', '>=', $from]])->get()->all();
+    $rooms = Room::join('hotels', 'hotels.id', '=', 'rooms.hotel_id')->join('transactions', 'rooms.id', '=', 'service_id')
+    ->select('rooms.*','hotels.*','transactions.*')
+    ->where([['capacity', '>=', $capacity],['city_id', '=', $city],['rooms.from', '<=', $from],['rooms.to', '>=', $to]])
+    //ver de agregar tipo function para subconsulta ->where(function($query) use($from,$to)
+    ->where([['transactions.from', '>=', $to]])
+    ->orWhere([['transactions.to', '<=', $from]])
+    ->get()->all();
     if(isset($amenities)){
     return array_filter($rooms, function ($room) use ($amenities) {
         $roomAmenities = $room->hotel->amenities;
