@@ -131,24 +131,22 @@ class TransactionController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreTransaction $request) {
+    public function removeFromCart(Request $request, $id) {
 
-        $transaction = new Transaction();
-        $transaction->service_name = $request->service_name; //deberia pasarse como parametro
-        $transaction->service_id = $request->service_id;
-        $transaction->user_id = $request->user_id;
-        $transaction->points = $request->points;
-        $transaction->points_given = 'false';
-        $transaction->price = $request->price;
-        //$transaction->status = 'En Carrito';
-        $transaction->save();
-        return redirect('transactions');
+        $transaction = Transaction::find($id);
+        if ($transaction->service->serviceType === 'Flight') {
+            $flight = $transaction->service;
+            $flight->increaseCapacity(1, $transaction->extra['class']);
+            if (isset($transaction->extra['stop'])) {
+                $stop = Flight::find($transaction->extra['stop']);
+                $stop->increaseCapacity(1, $transaction->extra['class']);
+                $stop->save();
+            }
+            $flight->save();
+        }
+        $transaction->delete();
+
+        return redirect('myCart');        
     }
 
 }

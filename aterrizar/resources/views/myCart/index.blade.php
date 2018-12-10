@@ -26,7 +26,7 @@
                     <td>{{ $transaction->points_given }}</td>
                     <td>{{ number_format($transaction->price, 2, ',', '') }}</td>
                     <td> <a class="btn btn-outline-primary" href="{{ URL('/completeTransaction/'.$transaction->id )}}" role="button">Comprar</a>
-                         <a class="btn btn-outline-danger" href="#" role="button">Eliminar</a>
+                         <a class="btn btn-outline-danger" href="{!!route('transactions.removefromcart', $transaction->id) !!}" role="button">Eliminar</a>
                       </td>
 
                 </tr>

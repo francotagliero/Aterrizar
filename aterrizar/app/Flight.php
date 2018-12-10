@@ -110,4 +110,10 @@ class Flight extends Model
 
         $this->{$this->seatsField($class)} = $this->{$this->seatsField($class)} - $seats;
     }
+
+
+    public function increaseCapacity($seats, $class) {
+
+        $this->{$this->seatsField($class)} = $this->{$this->seatsField($class)} + $seats;
+    }
 }
