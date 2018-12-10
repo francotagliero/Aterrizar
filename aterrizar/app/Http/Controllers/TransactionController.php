@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{AdminPanel, Car, Flight, Transaction};
+use App\{AdminPanel, Car, Flight, Transaction, Room};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -88,12 +88,21 @@ class TransactionController extends Controller
     }
     
     
-    public function addRoomToCart(Request $request /*...*/) {
+    public function addRoomToCart(Request $request, $id, $from, $to, $capacity) {
 
         $request->user()->authorizeRoles('user');
 
-        // ...
-
+        $room = Room::find($id);
+        $transaction = new Transaction();
+        $transaction->service()->associate($room);
+        $transaction->user()->associate(Auth::user());
+        $transaction->price = $room->priceForDates($from, $to, $capacity);
+        $transaction->from = $from;
+        $transaction->to = $to;
+        $transaction->extra = [ '' ];
+        $transaction->points = $this->getPoints($transaction->price);
+        $transaction->points_given = false;
+        $transaction->save();
         return redirect('myCart');
     }
 
