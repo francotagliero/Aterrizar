@@ -129,7 +129,7 @@ public function rooms($city, $capacity, $from, $to, $amenities) {
         $days=$this->getDaysDifference($date_rent,$date_return);
 
         $agencyId=$this->getAgencyIdByCity($from,$agency);
-        $cars=  Car::select('model','segment','price','range','brand_id','agency_id')->where([
+        $cars=  Car::select('id','model','segment','price','range','brand_id','agency_id')->where([
             ['agency_id', '=', $agencyId],
             ['brand_id', '=', $brand]
             ])->get();

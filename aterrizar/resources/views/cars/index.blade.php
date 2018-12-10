@@ -91,7 +91,12 @@
                     <td>{{ $car->range }}</td>
                     <td><a href="{{ route('agencies.show', $car->agency->id) }}">{{ $car->agency->name }}</a></td>
                     @if(Auth::user() and Auth::user()->hasRole('user'))
-                    <td><a class="btn btn-primary" href="#" role="button">Añadir al carrito</a></td>
+                    <td><a class="btn btn-primary" href="{!! route('cars.addtocart', [
+                            'id'           => $car->id,
+                            'dateRent'     => old('date_rent'),
+                            'dateReturn'   => old('date_return'),
+                            'returnCityId' => old('to')
+                        ]) !!}" role="button">Añadir al carrito</a></td>
                     @endif
                 </tr>
                 @endforeach
