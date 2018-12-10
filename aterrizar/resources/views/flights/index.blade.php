@@ -87,7 +87,9 @@
                     @elseif (old('class') == 'First')
                     <th>Capacidad Primera clase</th>
                     @endif
+                    @if(Auth::user() and Auth::user()->hasRole('user'))
                     <th></th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -112,10 +114,12 @@
                     @elseif (old('class') == 'First')
                     <td>{{ $stop->first_class_seats }}</td>
                     @endif
-                    @if($loop->count == 1)
-                    <td><a class="btn btn-primary" href="{{ $flight['route'] }}" role="button">Añadir al carrito</a></td>
-                    @elseif($loop->first)
-                    <td rowspan="{!! $loop->count !!}" class="align-middle"><a class="btn btn-primary" href="{{ $flight['route'] }}" role="button">Añadir al carrito</a></td>
+                    @if(Auth::user() and Auth::user()->hasRole('user'))
+                        @if($loop->count == 1)
+                        <td><a class="btn btn-primary" href="{{ $flight['route'] }}" role="button">Añadir al carrito</a></td>
+                        @elseif($loop->first)
+                        <td rowspan="{!! $loop->count !!}" class="align-middle"><a class="btn btn-primary" href="{{ $flight['route'] }}" role="button">Añadir al carrito</a></td>
+                        @endif
                     @endif
                 </tr>
                 @endforeach

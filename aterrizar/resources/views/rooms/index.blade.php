@@ -21,37 +21,35 @@
             <div class="row">
                 <div class='col-sm-6'>
                     <div class="form-group row">
-                        {!! Form::label('city', 'Ciudad', ['class' => 'col-sm-2 col-form-label']) !!}
-                        <div class="col-sm-10">
+                        {!! Form::label('city', 'Ciudad', ['class' => 'col-sm-4 col-form-label']) !!}
+                        <div class="col-sm-8">
                             {!! Form::select('city', $cities, null, ['class' => 'form-control ']) !!}
                         </div>
                     </div>
                     <div class="form-group row">
-                        {!! Form::label('capacity', 'Cantidad de Personas', ['class' => 'col-sm-2 col-form-label']) !!}
-                        <div class="col-sm-10">
+                        {!! Form::label('capacity', 'Cantidad de Personas', ['class' => 'col-sm-4 col-form-label']) !!}
+                        <div class="col-sm-8">
                             {!! Form::number('capacity', '1', ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="form-group row">
-                        {!! Form::label('from', 'Desde', ['class' => 'col-sm-2 col-form-label']) !!}
-                        <div class="col-sm-10">
+                        {!! Form::label('from', 'Desde', ['class' => 'col-sm-4 col-form-label']) !!}
+                        <div class="col-sm-8">
                             {!! Form::date('from', \Carbon\Carbon::now(), ['class' => 'form-control']) !!}
                         </div>
                     </div>
                 </div>
                 <div class='col-sm-6'>
                    <div class="form-group row">
-                        {!! Form::label('to', 'Hasta', ['class' => 'col-sm-2 col-form-label']) !!}
-                        <div class="col-sm-10">
+                        {!! Form::label('to', 'Hasta', ['class' => 'col-sm-4 col-form-label']) !!}
+                        <div class="col-sm-8">
                             {!! Form::date('to', \Carbon\Carbon::now(), ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="form-group row">
-                        {!! Form::label('amenities', 'Amenities', ['class' => 'col-auto col-form-label']) !!}
-                        <div class="col-auto">
-                            <div class="form-check">
-                                {!! Form::select('amenities[]', $final, null, ['class' => 'form-control', 'multiple' => 'multiple']) !!}
-                            </div>
+                        {!! Form::label('amenities', 'Amenities', ['class' => 'col-sm-4 col-form-label']) !!}
+                        <div class="col-sm-4">
+                        {!! Form::select('amenities[]', $final, null, ['class' => 'form-control', 'multiple' => 'multiple', 'size' => '4']) !!}
                         </div>
                         <div class='col-auto ml-auto'>
                             {!! Form::submit('Buscar', ['class' => 'btn btn-info']) !!}
@@ -61,13 +59,18 @@
             </div>
             {!! Form::close() !!}
         </div>
+        
         @isset($rooms)
-        <table class="table table-bordered">
-            <thead>
+        @if ($rooms->isNotEmpty())
+        <table class="table">
+            <thead class="thead-light">
                 <tr>
                     <th>Hotel</th>
                     <th>Capacidad</th>
-                    <th>Precio</th>
+                    <th>Precio</th>                    
+                    @if(Auth::user() and Auth::user()->hasRole('user'))
+                    <th></th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -76,15 +79,14 @@
                     <td><a href="{{ route('hotels.show', $room->id) }}">{{ $room->hotel->name }}</a></td>
                     <td>{{ $room->capacity }}</td>
                     <td>{{ number_format($room->hotel->price, 2, ',', '') }}</td>
-                    @if(Auth::user())
-                    @if(Auth::user()->hasRole('user'))
+                    @if(Auth::user() and Auth::user()->hasRole('user'))
                     <td><a class="btn btn-primary" href="#" role="button">Añadir al carrito</a></td>
-                    @endif
                     @endif
                 </tr>
                 @endforeach
             </tbody>
         </table>
+        @endif
         @endisset
     </div>
 </div>
