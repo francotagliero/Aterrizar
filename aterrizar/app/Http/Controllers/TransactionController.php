@@ -35,12 +35,12 @@ class TransactionController extends Controller
     }
 
     
-    public function addFlightToCart(Request $request, $class, $seats, $id, $stop = null) {
+    public function addFlightToCart(Request $request, $class, int $seats, $id, $stop = null) {
 
         $request->user()->authorizeRoles('user');
 
         $flight = Flight::find($id);
-        while ($seats) {
+        foreach (range(1, $seats) as $iteration) {
             $transaction = new Transaction();
             $transaction->service()->associate($flight);
             $transaction->user()->associate(Auth::user());
@@ -57,7 +57,12 @@ class TransactionController extends Controller
             $transaction->points = $this->getPoints($transaction->price);
             $transaction->points_given = false;
             $transaction->save();
-            $seats--;
+        }
+        $flight->decreaseCapacity($seats, $class);
+        $flight->save();
+        if ($stop !== null) {
+            $stop->decreaseCapacity($seats, $class);
+            $stop->save();
         }
         return redirect('myCart');
     }

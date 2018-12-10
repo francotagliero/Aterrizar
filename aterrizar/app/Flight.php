@@ -104,4 +104,10 @@ class Flight extends Model
 
         return (new \ReflectionClass($this))->getShortName();
     }
+
+
+    public function decreaseCapacity($seats, $class) {
+
+        $this->{$this->seatsField($class)} = $this->{$this->seatsField($class)} - $seats;
+    }
 }
