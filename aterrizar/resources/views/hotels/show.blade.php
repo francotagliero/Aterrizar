@@ -11,7 +11,7 @@
                     <li class="list-group-item">{{ $hotel->stars }} estrellas</li>
                     <li class="list-group-item">AR$ {{ number_format($hotel->price, 2, ',', '') }}</li>
                     <li class="list-group-item">Puntuación: {{ number_format($hotel->averageRating, 2, ',', '') }}</li>
-                    <li class="list-group-item">Incluye: {{ $hotel->amenities }}</li>
+                    <li class="list-group-item">Incluye: {{ implode(', ', $hotel->amenities) }}</li>
                 </ul>
             </div>
         </div>
