@@ -42,7 +42,7 @@
                     <div class="form-group row">
                         {!! Form::label('brand', 'Modelo', ['class' => 'col-sm-2 col-form-label']) !!}
                         <div class="col-sm-10">
-                            {!! Form::select('brand', $car_brands, ['class' => 'form-control']) !!}
+                            {!! Form::select('brand', $car_brands, null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                    <div class="form-group row">
@@ -55,7 +55,7 @@
                         {!! Form::label('agency', 'Compañia', ['class' => 'col-auto col-form-label']) !!}
                         <div class="col-auto">
                             <div class="form-check">
-                                {!! Form::select('agency', $car_rental_agencies, ['class' => 'form-control']) !!}
+                                {!! Form::select('agency', $car_rental_agencies, null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class='col-auto ml-auto'>

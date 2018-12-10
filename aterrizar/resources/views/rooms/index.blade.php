@@ -29,7 +29,7 @@
                     <div class="form-group row">
                         {!! Form::label('capacity', 'Cantidad de Personas', ['class' => 'col-sm-2 col-form-label']) !!}
                         <div class="col-sm-10">
-                            {!! Form::number('capacity', '0', null, ['class' => 'form-control']) !!}
+                            {!! Form::number('capacity', '1', ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -75,7 +75,7 @@
                 <tr>
                     <td><a href="{{ route('hotels.show', $room->id) }}">{{ $room->hotel->name }}</a></td>
                     <td>{{ $room->capacity }}</td>
-                    <td>{{ number_format($room->hotel->price, 2, ',', '') }}</td>
+                    <td>{{ number_format($room->hotel->price*$room->capacity, 2, ',', '') }}</td>
                     @if(Auth::user())
                     @if(Auth::user()->hasRole('user'))
                     <td><a class="btn btn-primary" href="#" role="button">Añadir al carrito</a></td>
