@@ -28,8 +28,7 @@ class Room extends Model
 
         $from = new Carbon($from);
         $to = new Carbon($to);
-
-        return $this->price * $capacity * $from->diffInDays($to);
+        return ($this->hotel->price * $capacity * $from->diffInDays($to));
     }
 
 }
