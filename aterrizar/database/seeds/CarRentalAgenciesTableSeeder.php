@@ -12,6 +12,7 @@ class CarRentalAgenciesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('car_rental_agencies')->truncate();
         $agencies = [ 
             ['name' => 'Avis',
             'address' => 'Cerrito 1535',

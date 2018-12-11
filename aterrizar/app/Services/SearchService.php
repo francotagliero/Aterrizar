@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\{AdminPanel, Car, City, Flight, Room, CarRentalAgency, Hotel};
+use App\{AdminPanel, Car, City, Flight, Room, CarRentalAgency, CarBrand, Hotel};
 use Carbon\Carbon;
 use \Datetime;
 use DB;
@@ -140,12 +140,21 @@ public function rooms($city, $capacity, $from, $to, $amenities) {
         $days=$this->getDaysDifference($date_rent,$date_return);
 
         $agencyId=$this->getAgencyIdByCity($from,$agency);
+        $cars= DB::select("select cars.* from cars where (agency_id = $agency and brand_id = $brand) 
+        and not exists (select * from transactions where cars.id = 
+        transactions.service_id and service_type like '%Car' and 
+        (transactions.from < '$date_return' and transactions.to > '$date_rent'))");
+        /*
         $cars=  Car::select('id','model','segment','price','range','brand_id','agency_id')->where([
             ['agency_id', '=', $agencyId],
             ['brand_id', '=', $brand]
             ])->get();
-        foreach ($cars as &$key) {
-            $key['price']=$key['price']*$days;
+         */   
+        foreach ($cars as &$car) {
+            $car->price=$car->price*$days;
+            $car->brand=CarBrand::find($car->brand_id);
+            $car->agency=CarRentalAgency::find($car->agency_id);
+
         }
         return $cars;
     }

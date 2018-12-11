@@ -26,5 +26,6 @@ class DatabaseSeeder extends Seeder
       $this->call(FlightsTableSeeder::class);
       $this->call(AdminPanelsTableSeeder::class);
       $this->call(RoomsTableSeeder::class);
+      $this->call(TransactionsTableSeeder::class);
     }
 }

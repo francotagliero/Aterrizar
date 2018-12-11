@@ -11,7 +11,8 @@ class CarBrandsTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {   
+        DB::table('car_brands')->truncate();
         $brands = [ 
             ['name' => 'Audi'],
             ['name' => 'BMW'],

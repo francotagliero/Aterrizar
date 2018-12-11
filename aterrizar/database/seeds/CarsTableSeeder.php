@@ -11,7 +11,8 @@ class CarsTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {          
+        DB::table('cars')->truncate();
         $buenosAires = City::where('name', 'Buenos Aires')->first()->id;
         $paris = City::where('name', 'París')->first()->id;
         $cars = [
