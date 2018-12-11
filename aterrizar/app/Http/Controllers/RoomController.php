@@ -41,9 +41,6 @@ public function index(Request $request) {
     $rooms = $request->old('rooms');
     if ($rooms !== null) {
             // Keep search on refresh
-        foreach ($rooms as &$room) {
-            $room->hotel=Hotel::find($room->hotel_id);
-        }
         $request->session()->reflash();
         return view('rooms.index')->with(compact('rooms', 'cities','final'));
     }
