@@ -5,6 +5,8 @@ namespace App\Services;
 use App\{AdminPanel, Car, City, Flight, Room, CarRentalAgency};
 use Carbon\Carbon;
 use \Datetime;
+use DB;
+
 
 
 class SearchService {
@@ -108,17 +110,12 @@ class SearchService {
 
 public function rooms($city, $capacity, $from, $to, $amenities) {
     $days=$this->getDaysDifference($from,$to);
-    $rooms = Room::join('hotels', 'hotels.id', '=', 'rooms.hotel_id')
-    ->join('transactions', function($join){
-        $join->on([['rooms.id', '=', 'service_id'],['transactions.service_type', '=', 'App\Room']]);
-    })
-    ->select('rooms.*','hotels.*')
-    ->where([['capacity', '>=', $capacity],['city_id', '=', $city]])
-    ->where([['rooms.from', '<=', $from],['rooms.to', '>=', $to]])
-    ->where([['transactions.from', '>=', $to]])
-    ->orWhere([['transactions.to', '<=', $from]])
-    ->get()->all();
-   // var_dump($rooms);
+    $rooms= DB::select("select rooms.*, hotels.* from rooms inner join 
+    hotels on hotels.id = rooms.hotel_id where (capacity >= $capacity and 
+    city_id = $city and rooms.from <= '$from' and rooms.to >= '$to') 
+    and not exists (select * from transactions where rooms.id = 
+    transactions.service_id and service_type like '%Room' and 
+    (transactions.from <= '$to' and transactions.to >= '$from') )");
     if(isset($amenities)){
     return array_filter($rooms, function ($room) use ($amenities) {
         $roomAmenities = $room->hotel->amenities;

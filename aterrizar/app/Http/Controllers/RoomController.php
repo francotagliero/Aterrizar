@@ -30,7 +30,7 @@ public function array_flatten($array) {
 public function index(Request $request) {
 
     $cities = City::pluck('name', 'id');
-
+    $hotel = Hotel::all();
     $amenities= Hotel::select('amenities')->get();
     $amenities = (array) json_decode($amenities, true);
     $amenities = $this->array_flatten($amenities);
@@ -41,6 +41,9 @@ public function index(Request $request) {
     $rooms = $request->old('rooms');
     if ($rooms !== null) {
             // Keep search on refresh
+        foreach ($rooms as &$room) {
+            $room->hotel=Hotel::find($room->hotel_id);
+        }
         $request->session()->reflash();
         return view('rooms.index')->with(compact('rooms', 'cities','final'));
     }
