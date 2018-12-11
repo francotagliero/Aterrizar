@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\{AdminPanel, Car, City, Flight, Room, CarRentalAgency};
+use App\{AdminPanel, Car, City, Flight, Room, CarRentalAgency, Hotel};
 use Carbon\Carbon;
 use \Datetime;
 use DB;
@@ -116,6 +116,9 @@ public function rooms($city, $capacity, $from, $to, $amenities) {
     and not exists (select * from transactions where rooms.id = 
     transactions.service_id and service_type like '%Room' and 
     (transactions.from < '$to' and transactions.to > '$from') )");
+    foreach ($rooms as &$room) {
+            $room->hotel=Hotel::find($room->hotel_id);
+    }
     if(isset($amenities)){
     return array_filter($rooms, function ($room) use ($amenities) {
         $roomAmenities = $room->hotel->amenities;
