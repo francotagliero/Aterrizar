@@ -66,7 +66,7 @@
         </div>
         
         @isset($cars)
-        @if ($cars->isNotEmpty())
+        @if (! empty($cars))
         <table class="table">
             <thead class="thead-light">
                 <tr>
