@@ -77,4 +77,12 @@ class FlightController extends Controller
         
         return back()->withInput($input);
     }
+    
+
+    public function show($id) {
+
+        $flight = Flight::findOrFail($id);
+
+        return view('flights.show')->with('flight', $flight);
+    }
 }
