@@ -115,7 +115,7 @@ public function rooms($city, $capacity, $from, $to, $amenities) {
     city_id = $city and rooms.from <= '$from' and rooms.to >= '$to') 
     and not exists (select * from transactions where rooms.id = 
     transactions.service_id and service_type like '%Room' and 
-    (transactions.from <= '$to' and transactions.to >= '$from') )");
+    (transactions.from < '$to' and transactions.to > '$from') )");
     if(isset($amenities)){
     return array_filter($rooms, function ($room) use ($amenities) {
         $roomAmenities = $room->hotel->amenities;
