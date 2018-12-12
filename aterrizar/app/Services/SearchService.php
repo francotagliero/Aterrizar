@@ -140,10 +140,23 @@ public function rooms($city, $capacity, $from, $to, $amenities) {
         $days=$this->getDaysDifference($date_rent,$date_return);
 
         $agencyId=$this->getAgencyIdByCity($from,$agency);
-        $cars= DB::select("select cars.* from cars where (agency_id = $agency and brand_id = $brand) 
+        if(! empty($agencyId))
+        {$agencyId=($agencyId['0'])['id'];}
+        else
+            return false;
+        
+        if($brand == '0'){
+            $cars= DB::select("select cars.* from cars where (agency_id = $agencyId) 
+            and not exists (select * from transactions where cars.id = 
+            transactions.service_id and service_type like '%Car' and 
+            (transactions.from < '$date_return' and transactions.to > '$date_rent'))");
+        }
+        else{    
+        $cars= DB::select("select cars.* from cars where (agency_id = $agencyId and brand_id = $brand) 
         and not exists (select * from transactions where cars.id = 
         transactions.service_id and service_type like '%Car' and 
         (transactions.from < '$date_return' and transactions.to > '$date_rent'))");
+        }
         /*
         $cars=  Car::select('id','model','segment','price','range','brand_id','agency_id')->where([
             ['agency_id', '=', $agencyId],

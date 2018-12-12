@@ -13,6 +13,7 @@ class CarController extends Controller
     public function index(Request $request) {
         $cities = City::pluck('name', 'id');
         $car_brands = CarBrand::pluck('name','id');
+        $car_brands->prepend('Cualquiera');
         $car_rental_agencies=CarRentalAgency::pluck('name','id')->toArray();
         $car_rental_agencies=array_unique($car_rental_agencies);
         $cars = $request->old('cars');

@@ -27,6 +27,12 @@ class CarsTableSeeder extends Seeder
              'price' => '1300',
              'range' => '600',
              'brand_id' => CarBrand::where('name', 'Peugeot')->first()->id,
+             'agency_id' => CarRentalAgency::where('name', 'Hertz')->where('city_id', $paris)->first()->id],
+              ['model' => 'TT',
+             'segment' => 'A',
+             'price' => '3000',
+             'range' => '600',
+             'brand_id' => CarBrand::where('name', 'Audi')->first()->id,
              'agency_id' => CarRentalAgency::where('name', 'Hertz')->where('city_id', $paris)->first()->id]
         ];
         foreach ($cars as $car) {
