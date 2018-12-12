@@ -79,7 +79,7 @@ class TransactionController extends Controller
         $transaction->price = $car->priceForDates($dateRent, $dateReturn);
         $transaction->from = $dateRent;
         $transaction->to = $dateReturn;
-        $transaction->extra = [ 'return_city_id' => $returnCityId ];
+        $transaction->extra = (int) $returnCityId;
         $transaction->points = $this->getPoints($transaction->price);
         $transaction->points_given = false;
         $transaction->save();
