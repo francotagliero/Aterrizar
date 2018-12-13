@@ -3,9 +3,17 @@
 namespace App\Listeners;
 
 use App\Transaction;
+use App\Services\TransactionService;
 
 class UserEventSubscriber
 {
+    private $transactionService;
+
+    public function __construct(TransactionService $transactionService) {
+
+        $this->transactionService = $transactionService;
+    }
+
     /**
      * Handle user login events.
      */
@@ -16,20 +24,7 @@ class UserEventSubscriber
      */
     public function onUserLogout($event) {
 
-        // Clear cart
-        foreach (Transaction::forLoggedUser()->inCart()->get() as $transaction) {
-            if ($transaction->service->serviceType === 'Flight') {
-                $flight = $transaction->service;
-                $flight->increaseCapacity(1, $transaction->detail->class);
-                $stop = $transaction->detail->stop;
-                if ($stop !== null) {
-                    $stop->increaseCapacity(1, $transaction->detail->class);
-                    $stop->save();
-                }
-                $flight->save();
-            }
-            $transaction->delete();
-        }
+        $this->transactionService->clearCart($event->user);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\{AdminPanel, Car, Flight, FlightTransactionDetail, Transaction, Room};
+use App\Services\TransactionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -143,32 +144,19 @@ class TransactionController extends Controller
     }
 
 
-    public function removeFromCart(Request $request, $id) {
+    public function removeFromCart(TransactionService $transactionService, $id) {
 
-        $transaction = Transaction::find($id);
-        if ($transaction->service->serviceType === 'Flight') {
-            $flight = $transaction->service;
-            $flight->increaseCapacity(1, $transaction->detail->class);
-            $stop = $transaction->detail->stop;
-            if ($stop !== null) {
-                $stop->increaseCapacity(1, $transaction->detail->class);
-                $stop->save();
-            }
-            $flight->save();
-        }
-        $transaction->delete();
+        $transaction = Transaction::findOrFail($id);
+        $transactionService->removeFromCart($transaction);
 
         return redirect('myCart');        
     }
 
 
-    public function clearCart() {
+    public function clearCart(TransactionService $transactionService) {
 
-        foreach (Transaction::forLoggedUser()->inCart()->get() as $transaction) {
-            $this->removeFromCart($transaction->id);
-        }
+        $transactionService->clearCart(Auth::user());
 
         return redirect('myCart');        
     }
-
 }

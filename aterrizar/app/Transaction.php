@@ -36,6 +36,14 @@ class Transaction extends Model
         });
     }
 
+    
+    public function scopeForUser($query, $user) {
+
+        return $query->whereHas('user', function ($query) use ($user) { 
+            $query->where('id', $user->id); 
+        });
+    }
+
 
     public function scopeInCart($query) {
 
