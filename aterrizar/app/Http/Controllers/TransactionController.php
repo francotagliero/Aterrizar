@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{AdminPanel, Car, Flight, Transaction, Room};
+use App\{AdminPanel, Car, Flight, FlightTransactionDetail, Transaction, Room};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,13 +47,16 @@ class TransactionController extends Controller
             $transaction->price = $flight->priceForClass($class);
             $transaction->from = $flight->date;
             $transaction->to = $flight->date;
-            $transaction->extra = [ 'class' => $class ];
+            $detail = new FlightTransactionDetail();
+            $detail->class = $class;
             if ($stop !== null) {
                 $stop = Flight::find($stop);
                 $transaction->price = ($transaction->price + $stop->priceForClass($class)) 
                                     * (1 - AdminPanel::find(1)->percentage_stopover);
-                $transaction->extra = array_merge($transaction->extra, ['stop' => $stop->id]);
+                $detail->stop()->associate($stop);
             }
+            $detail->save();
+            $transaction->detail()->associate($detail);
             $transaction->points = $this->getPoints($transaction->price);
             $transaction->points_given = false;
             $transaction->save();
@@ -145,15 +148,25 @@ class TransactionController extends Controller
         $transaction = Transaction::find($id);
         if ($transaction->service->serviceType === 'Flight') {
             $flight = $transaction->service;
-            $flight->increaseCapacity(1, $transaction->extra['class']);
-            if (isset($transaction->extra['stop'])) {
-                $stop = Flight::find($transaction->extra['stop']);
-                $stop->increaseCapacity(1, $transaction->extra['class']);
+            $flight->increaseCapacity(1, $transaction->detail->class);
+            $stop = $transaction->detail->stop;
+            if ($stop !== null) {
+                $stop->increaseCapacity(1, $transaction->detail->class);
                 $stop->save();
             }
             $flight->save();
         }
         $transaction->delete();
+
+        return redirect('myCart');        
+    }
+
+
+    public function clearCart() {
+
+        foreach (Transaction::forLoggedUser()->inCart()->get() as $transaction) {
+            $this->removeFromCart($transaction->id);
+        }
 
         return redirect('myCart');        
     }

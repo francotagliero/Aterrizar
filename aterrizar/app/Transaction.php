@@ -18,6 +18,12 @@ class Transaction extends Model
     }
 
 
+    public function detail() {
+
+        return $this->morphTo();
+    }
+
+
 	public function user(){
         return $this->belongsTo('App\User', 'user_id');
     }
