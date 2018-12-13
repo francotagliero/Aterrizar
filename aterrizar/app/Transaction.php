@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class Transaction extends Model
 {
+
+    const STATUS_INCART    = 'En Carrito';
+    const STATUS_BOUGHT    = 'Comprado';
+    const STATUS_CANCELLED = 'Cancelado';
+    const STATUS_CONSUMED  = 'Consumido';
+
 	protected $fillable = [ 'service_type', 'service_id', 'user_id', 'points', 'points_given', 'price', 'status', 'from', 'to', 'extra'];
 
     protected $casts = [ 'extra' => 'json' ];
@@ -47,12 +53,12 @@ class Transaction extends Model
 
     public function scopeInCart($query) {
 
-        return $query->where('status', 'En Carrito');
+        return $query->where('status', self::STATUS_INCART);
     }
 
 
     public function scopeBought($query) {
 
-        return $query->where('status', '<>', 'En Carrito');
+        return $query->where('status', '<>', self::STATUS_INCART);
     }
 }
