@@ -39,5 +39,6 @@ Route::get('/completeTransaction/{id}', 'TransactionController@completeTransacti
 Route::get('/flights/addtocart/{class}/{seats}/{id}/{stop?}', 'TransactionController@addFlightToCart')->name('flights.addtocart');
 Route::get('/cars/addtocart/{id}/{dateRent}/{dateReturn}/{returnCityId}', 'TransactionController@addCarToCart')->name('cars.addtocart');
 Route::get('/transactions/removefromcart/{id}', 'TransactionController@removeFromCart')->name('transactions.removefromcart');
+Route::get('/transactions/clearcart', 'TransactionController@clearCart')->name('transactions.clearcart');
 Route::get('/rooms/addtocart/{id}/{from}/{to}/{capacity}', 'TransactionController@addRoomToCart')->name('rooms.addtocart');
 

@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <h1>Mi Carrito</h1>
+        @if ($transactions->isNotEmpty())
         <table class="table">
             <thead>
                 <tr>
@@ -13,7 +14,7 @@
                     <th>Puntos</th>
                     <th>Puntos Asignados</th>
                     <th>Precio</th>
-                    <th>Accion</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -45,14 +46,20 @@
                     <td>{{ $transaction->points }}</td>
                     <td>{{ $transaction->points_given ? 'Sí' : 'No' }}</td>
                     <td>{{ number_format($transaction->price, 2, ',', '') }}</td>
-                    <td> <a class="btn btn-outline-primary" href="{{ URL('/completeTransaction/'.$transaction->id )}}" role="button">Comprar</a>
-                         <a class="btn btn-outline-danger" href="{!!route('transactions.removefromcart', $transaction->id) !!}" role="button">Eliminar</a>
-                      </td>
-
+                    <td><a class="btn btn-outline-danger" href="{!! route('transactions.removefromcart', $transaction->id) !!}" role="button">Eliminar</a></td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+
+        <div class="row">
+            <div class="col-sm-6"><a class="btn btn-outline-danger" href="{!! route('transactions.clearcart') !!}" role="button">Vaciar</a></div>
+            <div class="col-sm-6"><a class="btn btn-outline-primary" href="{{ URL('/completeTransaction/'.$transaction->id )}}" role="button">Comprar</a></div>
+            </div>
+        </div>
+        @else
+            @include('common.alert', ['type' => 'danger', 'message' => 'Tu carrito se encuentra vacío'])
+        @endif
     </div>
 </div>
 @endsection
