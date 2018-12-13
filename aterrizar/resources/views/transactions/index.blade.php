@@ -23,7 +23,7 @@
                     <td>{{ $transaction->id }}</td>
                     <td>{{ $transaction->service_name }}</td>
                     <td>{{ $transaction->service_id}}</td>
-                    <td>{{ $transaction->user_id->name }}</td>
+                    <td>{{ $transaction->user->name }}</td>
                     <td>{{ $transaction->points }}</td>
                     <td>{{ $transaction->points_given }}</td>
                     <td>{{ number_format($transaction->price, 2, ',', '') }}</td>

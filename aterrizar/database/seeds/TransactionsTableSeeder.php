@@ -31,7 +31,7 @@ class TransactionsTableSeeder extends Seeder
     	'status' => 'Comprado',
     	'from' => '2018/03/20',
     	'to' => '2018/03/25',
-    	'extra' => [ 'return_city_id' => $montevideo ]
+    	'extra' => 3
     	],
     	['service_type' => 'App\Car',
     	'service_id' => $peugeot,
@@ -42,7 +42,7 @@ class TransactionsTableSeeder extends Seeder
     	'status' => 'Comprado',
     	'from' => '2018/10/10',
     	'to' => '2018/10/13',
-    	'extra' => [ 'return_city_id' => $berlin ]
+    	'extra' => 6
     	],
     	];
     	foreach ($transactions as $transaction) {
