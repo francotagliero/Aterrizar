@@ -118,30 +118,12 @@ class TransactionController extends Controller
     }
 
 
-    public function completeTransaction($idTransaction)
-    {
-      //falta chequear la tarjeta y los puntos
-      $transaction = Transaction::where('id', '=', $idTransaction)->update(['status' => 'Comprado']);
-      return $this->myShopping();
-    }
-
     public function myShopping(Request $request)
     {
         $request->user()->authorizeRoles('user');
 
         $transactions = Transaction::forLoggedUser()->bought()->get();
         return view('myShopping.index')->with('transactions', $transactions);
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
 
