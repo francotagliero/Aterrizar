@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\{AdminPanel, Car, Flight, FlightTransactionDetail, Transaction, Room};
+use App\Http\Requests\Checkout;
 use App\Services\TransactionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -146,17 +147,83 @@ class TransactionController extends Controller
 
     public function removeFromCart(TransactionService $transactionService, $id) {
 
+        $request->user()->authorizeRoles('user');
+
         $transaction = Transaction::findOrFail($id);
         $transactionService->removeFromCart($transaction);
 
-        return redirect('myCart');        
+        return redirect('myCart');
     }
 
 
     public function clearCart(TransactionService $transactionService) {
 
+        $request->user()->authorizeRoles('user');
+
         $transactionService->clearCart(Auth::user());
 
-        return redirect('myCart');        
+        return redirect('myCart');
+    }
+
+
+    public function checkout(Request $request) {
+
+        $request->user()->authorizeRoles('user');
+
+        $transactions = Transaction::forLoggedUser()->inCart()->get();
+        $total = 0;
+        foreach ($transactions as $transaction) {
+            $total += $transaction->price;
+        }
+        $availablePoints = Auth::user()->points;
+        $pesos_per_point = AdminPanel::find(1)->pesos_per_point;
+
+        return view('myCart.checkout')->with(compact('transactions', 'total', 'availablePoints', 'pesos_per_point'));
+    }
+
+
+    public function confirmCheckout(Checkout $request) {
+
+        $request->user()->authorizeRoles('user');
+        
+        // Validate correctness of input against database
+        // 1. Points
+        if ($request->points > $request->user()->points) {
+            return $this->checkoutError();
+        }
+        $transactions = Transaction::forLoggedUser()->inCart()->get();
+        // 2. Total
+        $total = 0;
+        foreach ($transactions as $transaction) {
+            $total += $transaction->price;
+        }
+        if ($request->total != number_format($total, 2, ',', '.')) {
+            return $this->checkoutError();
+        }
+        // 3. Discount
+        $discount = $request->points * AdminPanel::find(1)->pesos_per_point;
+        if ($request->discount != number_format($discount, 2, ',', '.')) {
+            return $this->checkoutError();            
+        }
+        // 4. Final
+        if ($request->final != number_format($total - $discount, 2, ',', '.')) {
+            return $this->checkoutError();            
+        }
+
+        // Success
+        foreach ($transactions as $transaction) {
+            $transaction->status = Transaction::STATUS_BOUGHT;
+            $transaction->save();
+        }
+        $request->user()->points = $request->user()->points - $request->points;
+        $request->user()->save();
+
+        return redirect('myShopping');
+    }
+
+
+    private function checkoutError() {
+
+        return back()->withErrors('La compra no pudo realizarse. Vuelva a intentarlo');
     }
 }
