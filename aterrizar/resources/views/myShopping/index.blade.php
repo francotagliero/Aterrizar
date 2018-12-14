@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <h1>Mis Compras</h1>
-        <table class="table table-bordered">
-            <thead>
+        @include('common.title', ['title' => 'Mis Compras'])
+        <table class="table">
+            <thead class="thead-light">
                 <tr>
                     <th>id</th>
                     <th>Servicio</th>

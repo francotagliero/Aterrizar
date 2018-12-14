@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
+    @include('common.title', ['title' => 'Mi Carrito'])
     <div class="row justify-content-center">
-        <h1>Mi Carrito</h1>
         @if ($transactions->isNotEmpty())
         <table class="table">
             <thead>

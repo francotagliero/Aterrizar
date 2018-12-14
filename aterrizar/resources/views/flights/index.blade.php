@@ -3,8 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-
-        <h3 class="mb-4"><b>Buscar vuelos</b></h3>
+        @include('common.title', ['title' => 'Buscar vuelos'])
 
         @if ($errors->any())
         <div class="col-sm-12 alert alert-danger">
