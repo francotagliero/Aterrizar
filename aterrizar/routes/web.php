@@ -35,10 +35,11 @@ Route::post('/cars/search', 'CarController@search')->name('cars.search');
 Route::post('/rooms/search', 'RoomController@search')->name('rooms.search');
 Route::get('/myCart', 'TransactionController@myCart')->name('myCart');
 Route::get('/myShopping', 'TransactionController@myShopping');
-Route::get('/completeTransaction/{id}', 'TransactionController@completeTransaction');
 Route::get('/flights/addtocart/{class}/{seats}/{id}/{stop?}', 'TransactionController@addFlightToCart')->name('flights.addtocart');
 Route::get('/cars/addtocart/{id}/{dateRent}/{dateReturn}/{returnCityId}', 'TransactionController@addCarToCart')->name('cars.addtocart');
 Route::get('/transactions/removefromcart/{id}', 'TransactionController@removeFromCart')->name('transactions.removefromcart');
 Route::get('/transactions/clearcart', 'TransactionController@clearCart')->name('transactions.clearcart');
+Route::get('/transactions/checkout', 'TransactionController@checkout')->name('transactions.checkout');
+Route::post('/transactions/checkout/confirm', 'TransactionController@confirmCheckout')->name('transactions.confirmcheckout');
 Route::get('/rooms/addtocart/{id}/{from}/{to}/{capacity}', 'TransactionController@addRoomToCart')->name('rooms.addtocart');
 
