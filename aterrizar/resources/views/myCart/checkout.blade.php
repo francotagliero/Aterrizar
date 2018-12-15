@@ -93,8 +93,8 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    {!! Form::label('points', 'Puntos (' . $availablePoints . ' disponibles)', ['class' => 'col-auto mr-auto col-form-label']) !!}
-                    <div class="col-5">
+                    {!! Form::label('points', 'Puntos (' . $availablePoints . ' disponibles)', ['class' => 'col-sm-6 text-sm-left col-form-label']) !!}
+                    <div class="col-sm-6 ml-auto">
                         {!! Form::number('points', '0', ['min' => '0', 'max' => $availablePoints, 'class' => 'form-control text-right', 'id' => 'input_points']) !!}
                     </div>
                 </div>
