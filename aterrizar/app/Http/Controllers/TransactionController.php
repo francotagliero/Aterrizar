@@ -42,26 +42,28 @@ class TransactionController extends Controller
         $request->user()->authorizeRoles('user');
 
         $flight = Flight::find($id);
-        foreach (range(1, $seats) as $iteration) {
-            $transaction = new Transaction();
-            $transaction->service()->associate($flight);
-            $transaction->user()->associate(Auth::user());
-            $transaction->price = $flight->priceForClass($class);
-            $transaction->from = $flight->date;
-            $transaction->to = $flight->date;
-            $detail = new FlightTransactionDetail();
-            $detail->class = $class;
-            if ($stop !== null) {
-                $stop = Flight::find($stop);
-                $transaction->price = ($transaction->price + $stop->priceForClass($class)) 
-                                    * (1 - AdminPanel::find(1)->percentage_stopover);
-                $detail->stop()->associate($stop);
-            }
-            $detail->save();
-            $transaction->detail()->associate($detail);
-            $transaction->points = $this->getPoints($transaction->price);
-            $transaction->points_given = false;
-            $transaction->save();
+        $transaction = new Transaction();
+        $transaction->service()->associate($flight);
+        $transaction->user()->associate(Auth::user());
+        $transaction->price = $flight->priceForClass($class);
+        $transaction->from = $flight->date;
+        $transaction->to = $flight->date;
+        $detail = new FlightTransactionDetail();
+        $detail->class = $class;
+        if ($stop !== null) {
+            $stop = Flight::find($stop);
+            $transaction->price = ($transaction->price + $stop->priceForClass($class)) 
+                                * (1 - AdminPanel::find(1)->percentage_stopover);
+            $detail->stop()->associate($stop);
+        }
+        $detail->save();
+        $transaction->detail()->associate($detail);
+        $transaction->points = $this->getPoints($transaction->price);
+        $transaction->points_given = false;
+        $transaction->save();
+        foreach (range(2, $seats) as $iteration) {
+            $duplicate = $transaction->replicate();
+            $duplicate->push();
         }
         $flight->decreaseCapacity($seats, $class);
         $flight->save();
