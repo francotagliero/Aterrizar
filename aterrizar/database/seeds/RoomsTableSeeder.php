@@ -22,16 +22,16 @@ class RoomsTableSeeder extends Seeder
         $rooms = [
             ['hotel_id' => $romaHotel,
              'capacity' => 5,
-             'from' => new Carbon('2019-03-19'),
-             'to' => new Carbon('2019-03-30')],
+             'from' => new Carbon('2018-03-19'),
+             'to' => new Carbon('2018-03-30')],
              ['hotel_id' => $italiaHotel,
              'capacity' => 3,
-             'from' => new Carbon('2019-03-19'),
-             'to' => new Carbon('2019-03-30')],
+             'from' => new Carbon('2018-03-19'),
+             'to' => new Carbon('2018-03-30')],
              ['hotel_id' => $sudestadaHotel,
              'capacity' => 3,
-             'from' => new Carbon('2019-03-20'),
-             'to' => new Carbon('2019-03-25')],
+             'from' => new Carbon('2018-03-20'),
+             'to' => new Carbon('2018-03-25')],
              ];
          foreach ($rooms as $room) {
             Room::create($room);

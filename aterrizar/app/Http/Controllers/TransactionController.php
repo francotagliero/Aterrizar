@@ -61,7 +61,7 @@ class TransactionController extends Controller
         $transaction->points = $this->getPoints($transaction->price);
         $transaction->points_given = false;
         $transaction->save();
-        foreach (range(2, $seats) as $iteration) {
+        for($i=1; $i<$seats; $i++) {
             $duplicate = $transaction->replicate();
             $duplicate->push();
         }
@@ -129,7 +129,7 @@ class TransactionController extends Controller
     }
 
 
-    public function removeFromCart(TransactionService $transactionService, $id) {
+    public function removeFromCart(Request $request, TransactionService $transactionService, $id) {
 
         $request->user()->authorizeRoles('user');
 
