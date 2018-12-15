@@ -34,7 +34,7 @@ Route::post('/flights/search', 'FlightController@search')->name('flights.search'
 Route::post('/cars/search', 'CarController@search')->name('cars.search');
 Route::post('/rooms/search', 'RoomController@search')->name('rooms.search');
 Route::get('/myCart', 'TransactionController@myCart')->name('myCart');
-Route::get('/myShopping', 'TransactionController@myShopping');
+Route::get('/myShopping', 'TransactionController@myShopping')->name('myShopping');
 Route::get('/flights/addtocart/{class}/{seats}/{id}/{stop?}', 'TransactionController@addFlightToCart')->name('flights.addtocart');
 Route::get('/cars/addtocart/{id}/{dateRent}/{dateReturn}/{returnCityId}', 'TransactionController@addCarToCart')->name('cars.addtocart');
 Route::get('/transactions/removefromcart/{id}', 'TransactionController@removeFromCart')->name('transactions.removefromcart');
