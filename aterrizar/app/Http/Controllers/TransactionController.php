@@ -208,4 +208,15 @@ class TransactionController extends Controller
 
         return back()->withErrors('La compra no pudo realizarse. Vuelva a intentarlo');
     }
+
+
+    public function cancel(Request $request, TransactionService $transactionService, $id) {
+
+        $request->user()->authorizeRoles('user');
+
+        $transaction = Transaction::where('id', $id)->bought()->firstOrFail();
+        $transactionService->cancelTransaction($transaction);
+
+        return redirect('myShopping');
+    }
 }

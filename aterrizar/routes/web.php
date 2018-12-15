@@ -41,5 +41,6 @@ Route::get('/transactions/removefromcart/{id}', 'TransactionController@removeFro
 Route::get('/transactions/clearcart', 'TransactionController@clearCart')->name('transactions.clearcart');
 Route::get('/transactions/checkout', 'TransactionController@checkout')->name('transactions.checkout');
 Route::post('/transactions/checkout/confirm', 'TransactionController@confirmCheckout')->name('transactions.confirmcheckout');
+Route::get('/transactions/cancel/{id}', 'TransactionController@cancel')->name('transactions.cancel');
 Route::get('/rooms/addtocart/{id}/{from}/{to}/{capacity}', 'TransactionController@addRoomToCart')->name('rooms.addtocart');
 
