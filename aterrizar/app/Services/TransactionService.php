@@ -15,7 +15,7 @@ class TransactionService {
     }
 
 
-    public function removeFromCart(Transaction $transaction) {
+    private function undoTransaction(Transaction $transaction) {
 
         if ($transaction->service->serviceType === 'Flight') {
             $flight = $transaction->service;
@@ -27,6 +27,20 @@ class TransactionService {
             }
             $flight->save();
         }
+    }
+
+
+    public function removeFromCart(Transaction $transaction) {
+
+        $this->undoTransaction($transaction);
         $transaction->delete();     
+    }
+
+
+    public function cancelTransaction(Transaction $transaction) {
+
+        $this->undoTransaction($transaction);
+        $transaction->status = Transaction::STATUS_CANCELLED;
+        $transaction->save();     
     }
 }

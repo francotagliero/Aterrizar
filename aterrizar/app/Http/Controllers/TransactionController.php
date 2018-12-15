@@ -122,7 +122,7 @@ class TransactionController extends Controller
     {
         $request->user()->authorizeRoles('user');
 
-        $transactions = Transaction::forLoggedUser()->bought()->get();
+        $transactions = Transaction::forLoggedUser()->notInCart()->orderBy('created_at', 'DESC')->get();
         return view('myShopping.index')->with('transactions', $transactions);
     }
 
@@ -131,14 +131,14 @@ class TransactionController extends Controller
 
         $request->user()->authorizeRoles('user');
 
-        $transaction = Transaction::findOrFail($id);
+        $transaction = Transaction::where('id', $id)->inCart()->firstOrFail();
         $transactionService->removeFromCart($transaction);
 
         return redirect('myCart');
     }
 
 
-    public function clearCart(TransactionService $transactionService) {
+    public function clearCart(Request $request, TransactionService $transactionService) {
 
         $request->user()->authorizeRoles('user');
 

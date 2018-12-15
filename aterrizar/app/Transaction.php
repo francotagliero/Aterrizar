@@ -59,6 +59,12 @@ class Transaction extends Model
 
     public function scopeBought($query) {
 
+        return $query->where('status', self::STATUS_BOUGHT);
+    }
+
+
+    public function scopeNotInCart($query) {
+
         return $query->where('status', '<>', self::STATUS_INCART);
     }
 }
