@@ -40,6 +40,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user) {
         
         if ($user->hasRole('user')) {
+            session(['in_cart' => 0]);
             return redirect()->route('welcome');
         }
         return redirect()->route('home');

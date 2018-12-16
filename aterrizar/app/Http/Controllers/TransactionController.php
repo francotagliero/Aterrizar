@@ -71,6 +71,8 @@ class TransactionController extends Controller
             $stop->decreaseCapacity($seats, $class);
             $stop->save();
         }
+        $this->updateInCartSessionValue();
+
         return redirect('myCart');
     }
 
@@ -90,6 +92,7 @@ class TransactionController extends Controller
         $transaction->points = $this->getPoints($transaction->price);
         $transaction->points_given = false;
         $transaction->save();
+        $this->updateInCartSessionValue();
 
         return redirect('myCart');
     }
@@ -110,6 +113,8 @@ class TransactionController extends Controller
         $transaction->points = $this->getPoints($transaction->price);
         $transaction->points_given = false;
         $transaction->save();
+        $this->updateInCartSessionValue();
+
         return redirect('myCart');
     }
 
@@ -135,6 +140,7 @@ class TransactionController extends Controller
 
         $transaction = Transaction::where('id', $id)->inCart()->firstOrFail();
         $transactionService->removeFromCart($transaction);
+        $this->updateInCartSessionValue();
 
         return redirect('myCart');
     }
@@ -145,6 +151,7 @@ class TransactionController extends Controller
         $request->user()->authorizeRoles('user');
 
         $transactionService->clearCart(Auth::user());
+        $this->updateInCartSessionValue();
 
         return redirect('myCart');
     }
@@ -201,6 +208,7 @@ class TransactionController extends Controller
         }
         $request->user()->points = $request->user()->points - $request->points;
         $request->user()->save();
+        $this->updateInCartSessionValue();
 
         return redirect('myShopping');
     }
@@ -220,5 +228,13 @@ class TransactionController extends Controller
         $transactionService->cancelTransaction($transaction);
 
         return redirect('myShopping');
+    }
+
+
+    public function updateInCartSessionValue() {
+        
+        session([
+            'in_cart' => Transaction::forLoggedUser()->inCart()->count()
+        ]);
     }
 }

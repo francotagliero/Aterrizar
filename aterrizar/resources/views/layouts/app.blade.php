@@ -62,6 +62,7 @@
                     <li class="nav-item  {{ Route::currentRouteNamed('myCart') ? 'active' : '' }}">
                         <a class="nav-link" title="Mi carrito" href="{{ route('myCart') }}">
                             <i class="fas fa-shopping-cart fa-lg"></i>
+                            <span class="badge badge-pill badge-danger">{{ session('in_cart') }}</span>
                         </a>
                     </li>
                     <li class="nav-item {{ Route::currentRouteNamed('myShopping') ? 'active' : '' }}">
