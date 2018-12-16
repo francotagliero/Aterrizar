@@ -39,5 +39,5 @@
         </a>
         ({{ $transaction->service->capacity }} personas)
         <br>
-        Del {{ Carbon\Carbon::parse($transaction->service->from)->format('d-m-Y') }} al {{ Carbon\Carbon::parse($transaction->service->to)->format('d-m-Y') }}
+        Del {{ Carbon\Carbon::parse($transaction->from)->format('d-m-Y') }} al {{ Carbon\Carbon::parse($transaction->to)->format('d-m-Y') }}
 @endswitch
