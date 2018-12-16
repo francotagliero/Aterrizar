@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class='col-auto ml-auto'>
-                            {!! Form::submit('Buscar', ['class' => 'btn btn-info']) !!}
+                            {!! Form::submit('Buscar', ['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
                 </div>

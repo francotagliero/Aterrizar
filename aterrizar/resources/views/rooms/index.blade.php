@@ -51,7 +51,7 @@
                         {!! Form::select('amenities[]', $final, null, ['class' => 'form-control', 'multiple' => 'multiple', 'size' => '4']) !!}
                     </div>
                     <div class='col-auto ml-auto'>
-                        {!! Form::submit('Buscar', ['class' => 'btn btn-info']) !!}
+                        {!! Form::submit('Buscar', ['class' => 'btn btn-primary']) !!}
                     </div>
                 </div>
             </div>
