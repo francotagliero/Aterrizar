@@ -25,7 +25,7 @@ Route::resource('/cars', 'CarController');
 Route::resource('/role', 'RoleController');
 Route::resource('/myprofile', 'UserController');
 Route::resource('/givenregistration', 'RegistrableUserController');
-Route::get('/transactions', 'TransactionController@index');
+Route::get('/transactions', 'TransactionController@index')->name('transactions');
 Route::resource('/adminpanel', 'AdminPanelController');
 Route::get('/hotels/{hotel}', 'HotelController@show')->name('hotels.show');
 Route::get('/agencies/{agency}', 'CarRentalAgencyController@show')->name('agencies.show');
