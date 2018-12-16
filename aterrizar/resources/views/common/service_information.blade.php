@@ -31,7 +31,7 @@
         <br>
         {{ $transaction->service->agency->name }}
         <br>
-        Del {{ Carbon\Carbon::parse($transaction->service->from)->format('d-m-Y') }} al {{ Carbon\Carbon::parse($transaction->service->to)->format('d-m-Y') }}
+        Del {{ Carbon\Carbon::parse($transaction->from)->format('d-m-Y') }} al {{ Carbon\Carbon::parse($transaction->to)->format('d-m-Y') }}
         @break
     @case('Room')
         <a href="{!! route('rooms.show', $transaction->service_id) !!}">
