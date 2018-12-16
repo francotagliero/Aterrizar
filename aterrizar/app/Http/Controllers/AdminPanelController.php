@@ -51,7 +51,7 @@ class AdminPanelController extends Controller
         $settings->bussinessclass_factor = $request->bussinessclass_factor / 100;
         $settings->save();
 
-        return back();
+        return back()->with('success', true);
     }
 
     /**

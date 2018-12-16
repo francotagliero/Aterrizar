@@ -210,7 +210,7 @@ class TransactionController extends Controller
         $request->user()->save();
         $this->updateInCartSessionValue();
 
-        return redirect('myShopping');
+        return redirect('myShopping')->with('checkedout', true);
     }
 
 
@@ -227,7 +227,7 @@ class TransactionController extends Controller
         $transaction = Transaction::where('id', $id)->bought()->firstOrFail();
         $transactionService->cancelTransaction($transaction);
 
-        return redirect('myShopping');
+        return redirect('myShopping')->with('cancelled', true);
     }
 
 

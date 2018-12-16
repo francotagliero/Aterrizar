@@ -4,6 +4,13 @@
 <div class="container">
     @include('common.title', ['title' => 'Mis Compras'])
     <div class="row justify-content-center">
+        @if (session('cancelled'))
+            @include('common.alert', ['type' => 'success', 'message' => 'El servicio ha sido cancelado correctamente'])
+        @elseif (session('checkedout'))
+            @include('common.alert', ['type' => 'success', 'message' => 'La compra se ha realizado con éxito'])
+        @endif
+    </div>
+    <div class="row justify-content-center">
         @if ($transactions->isNotEmpty())
         <table class="table">
             <thead class="thead-light">

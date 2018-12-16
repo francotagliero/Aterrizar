@@ -12,6 +12,8 @@
                 @endforeach
             </ul>
         </div>
+        @elseif (session('success'))
+        @include('common.alert', ['type' => 'success', 'message' => 'Los valores se han guardado correctamente'])
         @endif
     </div>
     <div class="row justify-content-center">
