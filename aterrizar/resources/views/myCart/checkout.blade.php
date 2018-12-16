@@ -29,50 +29,9 @@
                     @foreach($transactions as $transaction)
                     <tr>
                         <td>{{ $transaction->id }}</td>
-                        @switch($transaction->service->service_type)
-                            @case('Flight')
-                                <td>Vuelo</td>
-                                <td>
-                                {{ $transaction->service->from->name }} &gt; {{ $transaction->service->to->name }}
-                                ({{ Carbon\Carbon::parse($transaction->service->date)->format('d-m-Y') }})
-                                @if ($transaction->detail->stop !== null)
-                                <br>
-                                {{ $transaction->detail->stop->from->name }} &gt; {{ $transaction->detail->stop->to->name }}
-                                ({{ Carbon\Carbon::parse($transaction->detail->stop->date)->format('d-m-Y') }})
-                                @endif
-                                <br>
-                                @switch($transaction->detail->class)
-                                    @case('Economy')
-                                    Clase Económica
-                                    @break
-                                    @case('Business')
-                                    Clase Ejecutiva
-                                    @break
-                                    @case('First')
-                                    Primera Clase
-                                @endswitch
-                                </td>
-                                @break
-                            @case('Car')
-                                <td>Auto</td>
-                                <td>
-                                {{ $transaction->service->brand->name }} {{ $transaction->service->model }}
-                                <br>
-                                {{ $transaction->service->agency->name }}
-                                <br>
-                                Del {{ Carbon\Carbon::parse($transaction->service->from)->format('d-m-Y') }} al {{ Carbon\Carbon::parse($transaction->service->to)->format('d-m-Y') }}
-                                </td>
-                                @break
-                            @case('Room')
-                                <td>Habitación</td>
-                                <td>
-                                Hotel {{ $transaction->service->hotel->name }}
-                                ({{ $transaction->service->capacity }} personas)
-                                <br>
-                                Del {{ Carbon\Carbon::parse($transaction->service->from)->format('d-m-Y') }} al {{ Carbon\Carbon::parse($transaction->service->to)->format('d-m-Y') }}
-                                </td>
-                        @endswitch
-                        <td class="text-sm-right">$ {{ number_format($transaction->price, 2, ',', '.') }}</td>
+                        <td>@include('common.service_type', ['transaction' => $transaction])</td>
+                        <td>@include('common.service_information', ['transaction' => $transaction, 'no_links' => true ])</td>
+                        <td class="text-sm-right">@include('common.price', ['price' => $transaction->price])</td>
                     </tr>
                     @endforeach
                 </tbody>
