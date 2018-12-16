@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
-use App\{City, Hotel, Room};
+use App\{City, Hotel, Room, Transaction};
 use App\Http\Requests\{SearchRoom, StoreRoom};
 use App\Services\SearchService;
 
@@ -82,5 +82,16 @@ public function search(SearchRoom $request, SearchService $search) {
     $input['rooms'] = $rooms;
 
     return back()->withInput($input);
+}
+
+public function show($id_transaction) {
+
+        $transaction=Transaction::find($id_transaction);
+        
+        $room = Room::find($transaction->service_id);
+        
+        $hotel = Hotel::find($room->hotel_id);
+
+        return view('rooms.show')->with(compact('hotel', 'transaction', 'room'));
 }
 }

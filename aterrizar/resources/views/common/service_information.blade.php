@@ -49,7 +49,7 @@
         @if (isset($no_links))
             Hotel {{ $transaction->service->hotel->name }} 
         @else
-            <a href="{!! route('rooms.show', $transaction->service_id) !!}">
+            <a href="{!! route('rooms.show', $transaction->id) !!}">
             Hotel {{ $transaction->service->hotel->name }} 
             </a>
         @endif
