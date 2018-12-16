@@ -7,9 +7,9 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>id</th>
+                    <th>ID</th>
                     <th>Servicio</th>
-                    <th>Id del Servicio</th>
+                    <th>Información del Servicio</th>
                     <th>Usuario</th>
                     <th>Puntos</th>
                     <th>Puntos Asignados</th>
@@ -20,12 +20,12 @@
             <tbody>
                 @foreach($transactions as $transaction)
                 <tr>
-                    <td>{{ $transaction->id }}</td>
-                    <td>{{ $transaction->service_name }}</td>
-                    <td>{{ $transaction->service_id}}</td>
+                    <td>{{ $transaction->service_id }}</td>
+                    <td>@include('common.service_type', ['transaction' => $transaction])</td>
+                    <td> @include('common.service_information', ['transaction' => $transaction])</td>
                     <td>{{ $transaction->user->name }}</td>
                     <td>{{ $transaction->points }}</td>
-                    <td>{{ $transaction->points_given }}</td>
+                    <td>{{ $transaction->points_given ? 'Sí' : 'No' }}</td>
                     <td>{{ number_format($transaction->price, 2, ',', '') }}</td>
                     <td>{{ $transaction->status }}</td>
     
