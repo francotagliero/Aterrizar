@@ -4,8 +4,8 @@
 <div class="container">
     @include('common.title', ['title' => 'Mi Carrito'])
     <div class="row justify-content-center">
+        @if ($transactions->isNotEmpty())
         <div class="col-sm-12">
-            @if ($transactions->isNotEmpty())
             <table class="table">
                 <thead class="thead-light">
                     <tr>
@@ -34,10 +34,10 @@
                 <div class="col-auto"><a class="btn btn-primary" href="{!! route('transactions.checkout') !!}" role="button">Comprar</a></div>
                 </div>
             </div>
-            @else
-                @include('common.alert', ['type' => 'danger', 'message' => 'Tu carrito se encuentra vacío'])
-            @endif
         </div>
+        @else
+            @include('common.alert', ['type' => 'danger', 'message' => 'Tu carrito se encuentra vacío'])
+        @endif
     </div>
 </div>
 @endsection
