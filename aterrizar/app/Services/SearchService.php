@@ -115,7 +115,7 @@ public function rooms($city, $capacity, $from, $to, $amenities) {
             city_id = $city and rooms.from <= '$from' and rooms.to >= '$to') 
     and not exists (select * from transactions where transactions.status<>'Cancelado' and rooms.id = 
         transactions.service_id and service_type like '%Room' and 
-        (transactions.from < '$to' and transactions.to > '$from') )");
+        (transactions.from < '$to' and transactions.to > '$from')) order by price DESC");
     foreach ($rooms as &$room) {
         $room->hotel=Hotel::find($room->hotel_id);
     }
@@ -160,13 +160,13 @@ public function cars($from, $to, $date_rent, $date_return, $brand, $agency) {
        $cars= DB::select("select cars.* from cars where (agency_id = $agencyId) 
        and not exists (select * from transactions where cars.id = 
        transactions.service_id and service_type like '%Car' and
-       (transactions.from < '$date_return' and transactions.to > '$date_rent'))");
+       (transactions.from < '$date_return' and transactions.to > '$date_rent')) order by price");
     }
     else{    
        $cars= DB::select("select cars.* from cars where (agency_id = $agencyId and brand_id = $brand) 
        and not exists (select * from transactions where cars.id = 
        transactions.service_id and service_type like '%Car' and
-       (transactions.from < '$date_return' and transactions.to > '$date_rent'))");
+       (transactions.from < '$date_return' and transactions.to > '$date_rent')) order by price");
     }
     $pos=0;
     foreach ($cars as &$car) {

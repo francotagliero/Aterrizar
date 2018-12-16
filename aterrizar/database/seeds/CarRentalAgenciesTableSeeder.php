@@ -15,7 +15,7 @@ class CarRentalAgenciesTableSeeder extends Seeder
         DB::table('car_rental_agencies')->truncate();
         $agencies = [ 
             ['name' => 'Avis',
-            'address' => 'Cerrito 1535',
+            'address' => 'Santa Fe 1300',
             'city_id' => City::where('name', 'Buenos Aires')->first()->id,
             'ratings' => 119,
             'votes' =>  20],
@@ -54,8 +54,8 @@ class CarRentalAgenciesTableSeeder extends Seeder
             'city_id' => City::where('name', 'Berlín')->first()->id,
             'ratings' => 300,
             'votes' =>  43],
-            ['name' => 'Hertz',
-            'address' => 'St. Ferdinand 27',
+            ['name' => 'Avis',
+            'address' => 'Rue de Lourmel 105',
             'city_id' => City::where('name', 'Paris')->first()->id,
             'ratings' => 293,
             'votes' =>  35]
