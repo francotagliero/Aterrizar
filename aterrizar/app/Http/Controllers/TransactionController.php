@@ -142,7 +142,7 @@ class TransactionController extends Controller
         $transactionService->removeFromCart($transaction);
         $this->updateInCartSessionValue();
 
-        return redirect('myCart');
+        return redirect('myCart')->with('deleted', true);
     }
 
 

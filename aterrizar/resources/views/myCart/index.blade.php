@@ -4,6 +4,11 @@
 <div class="container">
     @include('common.title', ['title' => 'Mi Carrito'])
     <div class="row justify-content-center">
+        @if (session('deleted') and $transactions->isNotEmpty())
+            @include('common.alert', ['type' => 'success', 'message' => 'Has eliminado el servicio del carrito'])
+        @endif
+    </div>
+    <div class="row justify-content-center">
         @if ($transactions->isNotEmpty())
         <div class="col-sm-12">
             <table class="table">
