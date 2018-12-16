@@ -77,7 +77,7 @@
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Duración</th>
-                    <th>Precio</th>
+                    <th class="text-sm-right">Precio</th>
                     <th>Aerolínea</th>
                     @if (old('class') == 'Economy')
                     <th>Capacidad Económica</th>
@@ -101,9 +101,9 @@
                     <td>{{ Carbon\Carbon::parse($stop->time)->format('H:i') }}</td>
                     <td>{{ Carbon\Carbon::parse($stop->duration)->format('H:i') }}</td>
                     @if($loop->count == 1)
-                    <td>{{ number_format($flight['price'], 2, ',', '.') }}</td>
+                    <td class="text-sm-right">@include('common.price', ['price' => $flight['price']])</td>
                     @elseif($loop->first)
-                    <td rowspan="{!! $loop->count !!}" class="align-middle">{{ number_format($flight['price'], 2, ',', '.') }}</td>
+                    <td rowspan="{!! $loop->count !!}" class="align-middle text-sm-right">@include('common.price', ['price' => $flight['price']])</td>
                     @endif
                     <td>{{ $stop->airline->name }}</td>
                     @if (old('class') == 'Economy')

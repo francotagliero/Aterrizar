@@ -66,7 +66,7 @@
             <tr>
                 <th>Hotel</th>
                 <th>Capacidad</th>
-                <th>Precio</th>                    
+                <th class="text-sm-right">Precio</th>                    
                 @if(Auth::user() and Auth::user()->hasRole('user'))
                 <th></th>
                 @endif
@@ -77,7 +77,7 @@
             <tr>
                 <td><a href="{{ route('hotels.show', $room->id) }}">{{ $room->hotel->name }}</a></td>
                 <td>{{ $room->capacity }}</td>
-                <td>{{ number_format($room->hotel->price*$room->capacity, 2, ',', '') }}</td>
+                <td class="text-sm-right">@include('common.price', ['price' => $room->hotel->price*$room->capacity])</td>
                 @if(Auth::user() and Auth::user()->hasRole('user'))
                 <td><a class="btn btn-primary" href="{!! route('rooms.addtocart', [
                     'id'           => $room->id,

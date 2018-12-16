@@ -73,7 +73,7 @@
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>Segmento</th>
-                    <th>Precio</th>
+                    <th class="text-sm-right">Precio</th>
                     <th>Autonomía</th>
                     <th>Agencia</th>
                     @if(Auth::user() and Auth::user()->hasRole('user'))
@@ -87,7 +87,7 @@
                     <td>{{ $car->brand->name }}</td>
                     <td>{{ $car->model }}</td>
                     <td>{{ $car->segment }}</td>
-                    <td>{{ number_format($car->price, 2, ',', '') }}</td>
+                    <td class="text-sm-right">@include('common.price', ['price' => $car->price])</td>
                     <td>{{ $car->range }}</td>
                     <td><a href="{{ route('agencies.show', $car->agency->id) }}">{{ $car->agency->name }}</a></td>
                     @if(Auth::user() and Auth::user()->hasRole('user'))
