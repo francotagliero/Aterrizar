@@ -13,13 +13,12 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', 'AdminController@index');
-Route::get('/comercial', 'ComercialController@index');
 Route::resource('/flights', 'FlightController');
 Route::resource('/rooms', 'RoomController');
 Route::resource('/cars', 'CarController');

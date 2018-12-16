@@ -55,15 +55,15 @@ return [
             'driver' => 'token',
             'provider' => 'admins',
         ],
-        'comercial' => [
-            'driver' => 'session',
-            'provider' => 'comercial',
-        ],
+        // 'comercial' => [
+        //     'driver' => 'session',
+        //     'provider' => 'comercial',
+        // ],
 
-        'comercial-api' => [
-            'driver' => 'token',
-            'provider' => 'comercials',
-        ],
+        // 'comercial-api' => [
+        //     'driver' => 'token',
+        //     'provider' => 'comercials',
+        // ],
     ],
 
     /*
@@ -92,10 +92,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
         ],
-        'comercial' => [
-            'driver' => 'eloquent',
-            'model' => App\Comercial::class,
-        ],
+        // 'comercial' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Comercial::class,
+        // ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -129,11 +129,11 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
-        'comercial' => [
-            'provider' => 'comercials',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],
+        // 'comercial' => [
+        //     'provider' => 'comercials',
+        //     'table' => 'password_resets',
+        //     'expire' => 60,
+        // ],
     ],
 
 ];
