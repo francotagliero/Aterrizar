@@ -29,11 +29,11 @@ class StoreFlight extends FormRequest
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
             'duration' => 'required|date_format:H:i',
-            'price' => 'required',
+            'price' => 'required|numeric|min:0',
             'airline' => 'required|exists:airlines,id',
-            'economy_seats' => 'required',
-            'business_seats' => 'required',
-            'first_class_seats' => 'required'
+            'economy_seats' => 'required|numeric|min:0',
+            'business_seats' => 'required|numeric|min:0',
+            'first_class_seats' => 'required|numeric|min:0'
         ];
     }
 }

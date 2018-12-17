@@ -47,8 +47,15 @@ class FlightController extends Controller
         $flight->business_seats = $request->business_seats;
         $flight->first_class_seats = $request->first_class_seats;
         $flight->save();
-
-        return redirect('flights');
+        if ($request->has('whole_week')) {
+            foreach (range(1,6) as $days) {
+                $duplicate = $flight->replicate();
+                $duplicate->date = $duplicate->date->addDays($days);
+                $duplicate->push();
+            }
+            return back()->with('success_many', true);
+        }
+        return back()->with('success_one', true);
     }
 
 
