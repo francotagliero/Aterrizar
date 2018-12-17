@@ -125,9 +125,11 @@ class TransactionController extends Controller
     }
 
 
-    public function myShopping(Request $request)
+    public function myShopping(Request $request, TransactionService $transactionService)
     {
         $request->user()->authorizeRoles('user');
+
+        $transactionService->consumeTransactions($request->user());
 
         $transactions = Transaction::forLoggedUser()->notInCart()->orderBy('created_at', 'DESC')->get();
         return view('myShopping.index')->with('transactions', $transactions);
@@ -157,9 +159,11 @@ class TransactionController extends Controller
     }
 
 
-    public function checkout(Request $request) {
+    public function checkout(Request $request, TransactionService $transactionService) {
 
         $request->user()->authorizeRoles('user');
+
+        $transactionService->consumeTransactions($request->user());
 
         $transactions = Transaction::forLoggedUser()->inCart()->get();
         $total = 0;
@@ -204,6 +208,10 @@ class TransactionController extends Controller
         // Success
         foreach ($transactions as $transaction) {
             $transaction->status = Transaction::STATUS_BOUGHT;
+            if ($request->points > 0) {
+                // Update points to be given
+                $transaction->points = $this->getPoints($request->final);
+            }
             $transaction->save();
         }
         $request->user()->points = $request->user()->points - $request->points;

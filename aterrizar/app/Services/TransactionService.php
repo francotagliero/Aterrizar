@@ -41,6 +41,18 @@ class TransactionService {
 
         $this->undoTransaction($transaction);
         $transaction->status = Transaction::STATUS_CANCELLED;
-        $transaction->save();     
+        $transaction->save();
+    }
+
+
+    public function consumeTransactions($user) {
+
+        foreach (Transaction::forUser($user)->bought()->past()->get() as $transaction) {
+            $user->points = $user->points + $transaction->points;
+            $transaction->status = Transaction::STATUS_CONSUMED;
+            $transaction->points_given = true;
+            $transaction->save();
+        }
+        $user->save();
     }
 }

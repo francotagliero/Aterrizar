@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,5 +67,11 @@ class Transaction extends Model
     public function scopeNotInCart($query) {
 
         return $query->where('status', '<>', self::STATUS_INCART);
+    }
+
+
+    public function scopePast($query) {
+
+        return $query->where('to', '<', new Carbon('now'));
     }
 }

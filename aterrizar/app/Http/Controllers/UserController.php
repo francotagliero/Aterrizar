@@ -1,15 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\StoreProfile;
+use App\Services\TransactionService;
+use App\User;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
-use App\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreProfile;
 
 class UserController extends Controller
 {  
-    public function index() {
+    public function index(Request $request, TransactionService $transactionService) {
+
+        $transactionService->consumeTransactions($request->user());
+        
     	  $id = Auth::user()->id;
     	  $role= Auth::user()->roles;
     	  $role=$role[0]->name;
