@@ -86,14 +86,20 @@
                         @endif
                         @endif
                         @if(Auth::user()->hasRole('comercial'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('flights.index') }}">Agregar Vuelos</a>
+                        <li class="nav-item {{ Route::currentRouteNamed('flights.create') ? 'active' : '' }}">
+                            <a class="nav-link" title="Agregar vuelos" href="{{ route('flights.create') }}">
+                                <i class="fas fa-plane fa-lg"></i> Agregar vuelos
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cars.index') }}">Agregar Autos</a>
+                        <li class="nav-item {{ Route::currentRouteNamed('cars.create') ? 'active' : '' }}">
+                            <a class="nav-link" title="Agregar Autos" href="{{ route('cars.create') }}">
+                                <i class="fas fa-car fa-lg"></i> Agregar autos
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('rooms.index') }}">Agregar Hospedaje</a>
+                        <li class="nav-item {{ Route::currentRouteNamed('rooms.create') ? 'active' : '' }}">
+                            <a class="nav-link" title="Agregar Hospedaje" href="{{ route('rooms.create') }}">
+                                <i class="fas fa-concierge-bell fa-lg"></i> Agregar hospedaje
+                            </a>
                         </li>
                         @if (empty(Auth::user()->dni))
                         <li class="nav-item">
