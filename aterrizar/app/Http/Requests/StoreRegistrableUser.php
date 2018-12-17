@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRegistrableUser extends FormRequest
 {
@@ -24,8 +25,13 @@ class StoreRegistrableUser extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:registrable_users',
-            'roles' => 'required',
+            'email' => 'required|email|unique:registrable_users|unique:users',
+            'role' => [
+                'required',
+                Rule::exists('roles', 'id')->where(function ($query) {
+                    $query->whereIn('name', ['admin', 'comercial']);
+                })
+            ]
         ];
     }
 }

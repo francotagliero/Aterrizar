@@ -31,7 +31,7 @@ class RegistrableUserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name', 'id');
+        $roles = Role::registrable()->get()->pluck('description', 'id');
         return view('registrableUser.create')->with(compact('roles'));
     }
 
@@ -45,7 +45,7 @@ class RegistrableUserController extends Controller
     {
         $registrableUser = new RegistrableUser();
         $registrableUser->email= $request->email;
-        $registrableUser->role()->associate(Role::find($request->roles));
+        $registrableUser->role()->associate(Role::find($request->role));
         $registrableUser->save();
 
         return redirect('givenregistration');
