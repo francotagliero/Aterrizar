@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{Car, CarBrand, CarRentalAgency,City};
+use App\{Car, CarBrand, CarRentalAgency,City, Transaction};
 use Illuminate\Http\Request;
 use App\Http\Requests\{SearchCar, StoreCar};
 use App\Services\SearchService;
@@ -66,6 +66,15 @@ class CarController extends Controller
         $input['cars'] = $cars;
         
         return back()->withInput($input);
+    }
+
+    public function show($id) {
+
+        $transaction= Transaction::find($id);
+        $car= Car::find($transaction->service_id);
+        $agency = CarRentalAgency::find($car->agency_id);
+
+        return view('cars.show')->with(compact('transaction', 'car', 'agency'));
     }
 
 }
