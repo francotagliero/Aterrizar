@@ -53,7 +53,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users|exists:registrable_users',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             ]);
     }
@@ -65,29 +65,32 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
-    {       
-      $rol=RegistrableUser::where("email","=",$data['email'])->first()->role_id;
-      if($rol==2){  
-      $user = User::create([
-        'name' => $data['name'],
-        'lastname' =>$data['lastname'],
-        'email' => $data['email'],
-        'password' => Hash::make($data['password']),
-        'points'=> 0,
-        ]);
-      } 
-      else{
-          $user = User::create([
-        'name' => $data['name'],
-        'lastname' =>$data['lastname'],
-        'email' => $data['email'],
-        'password' => Hash::make($data['password']),
-        ]);
-      }
-      {$user
-          ->roles()
-          ->attach($rol);
-      }
+    {
+     $rol=RegistrableUser::where("email","=",$data['email'])->get();
+      if($rol->isEmpty())
+      { $rol=2;  
+        $user = User::create([
+            'name' => $data['name'],
+            'lastname' =>$data['lastname'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'points'=> 0,
+            ]);
+        $user
+        ->roles()
+        ->attach($rol); 
+    } 
+    else{
+        $user = User::create([
+            'name' => $data['name'],
+            'lastname' =>$data['lastname'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            ]);
+        $user
+        ->roles()
+        ->attach($rol->first()->role_id);
+    }
     return $user;
 }
 }
