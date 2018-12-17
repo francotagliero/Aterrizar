@@ -12,6 +12,9 @@
 */
 
 Route::get('/', function () {
+    if (Auth::user() and Auth::user()->hasAnyRole(['admin', 'comercial'])) {
+        return view('home');
+    }
     return view('welcome');
 })->name('welcome');
 
