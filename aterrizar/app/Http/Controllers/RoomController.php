@@ -61,12 +61,12 @@ public function store(StoreRoom $request) {
 
     $room = new Room();
     $room->hotel()->associate(Hotel::find($request->hotel));
-    $room->rooms = $request->rooms;
+    $room->capacity = $request->capacity;
     $room->from = $request->from;
     $room->to = $request->to;
     $room->save();
 
-    return redirect('rooms');
+    return back()->with('success', true);
 }
 
 public function search(SearchRoom $request, SearchService $search) {
