@@ -49,7 +49,7 @@ class CarController extends Controller
         $car->range = $request->range;
         $car->save();
 
-        return redirect('cars');
+        return back()->with('success', true);
     }
 
     public function search(SearchCar $request, SearchService $search) {

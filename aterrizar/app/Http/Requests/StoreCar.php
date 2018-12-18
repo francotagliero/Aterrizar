@@ -27,9 +27,9 @@ class StoreCar extends FormRequest
             'brand' => 'required|exists:car_brands,id',
             'agency' => 'required|exists:car_rental_agencies,id',
             'model' => 'required',
-            'segment' => 'required|size:1',
-            'price' => 'required|numeric',
-            'range' => 'required|integer'
+            'segment' => 'required|in:A,B,C,D,E,F',
+            'price' => 'required|numeric|min:0',
+            'range' => 'required|integer|min:0'
         ];
     }
 }
