@@ -120,7 +120,8 @@ class TransactionController extends Controller
 
 
     private function getPoints($price) {
-        return floor((int)$price * AdminPanel::find(1)->pesos_per_point);
+        
+        return floor($price * AdminPanel::find(1)->pesos_per_point);
     }
 
 
@@ -200,7 +201,8 @@ class TransactionController extends Controller
             return $this->checkoutError();            
         }
         // 4. Final
-        if ($request->final != number_format($total - $discount, 2, ',', '.')) {
+        $final = $total - $discount;
+        if ($request->final != number_format($final, 2, ',', '.')) {
             return $this->checkoutError();            
         }
 
@@ -209,7 +211,7 @@ class TransactionController extends Controller
             $transaction->status = Transaction::STATUS_BOUGHT;
             if ($request->points > 0) {
                 // Update points to be given
-                $transaction->points = $this->getPoints($request->final);
+                $transaction->points = $this->getPoints($final);
             }
             $transaction->save();
         }
