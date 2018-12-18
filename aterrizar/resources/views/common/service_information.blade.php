@@ -36,7 +36,7 @@
         @if (isset($no_links))
             {{ $transaction->service->brand->name }} {{ $transaction->service->model }}
         @else
-            <a href="{!! route('cars.show', $transaction->id) !!}">
+            <a href="{!! route('cars.show', $transaction->service_id) !!}">
             {{ $transaction->service->brand->name }} {{ $transaction->service->model }}
             </a>
         @endif
@@ -49,7 +49,7 @@
         @if (isset($no_links))
             Hotel {{ $transaction->service->hotel->name }} 
         @else
-            <a href="{!! route('rooms.show', $transaction->id) !!}">
+            <a href="{!! route('rooms.show', $transaction->service_id) !!}">
             Hotel {{ $transaction->service->hotel->name }} 
             </a>
         @endif

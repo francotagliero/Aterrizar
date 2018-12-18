@@ -83,11 +83,10 @@ class CarController extends Controller
 
         $request->user()->authorizeRoles(['user']);
 
-        $transaction= Transaction::find($id);
-        $car= Car::find($transaction->service_id);
+        $car= Car::find($id);
         $agency = CarRentalAgency::find($car->agency_id);
 
-        return view('cars.show')->with(compact('transaction', 'car', 'agency'));
+        return view('cars.show')->with(compact('car', 'agency'));
     }
 
 }

@@ -97,12 +97,10 @@ class RoomController extends Controller
 
         $request->user()->authorizeRoles(['user']);
 
-        $transaction=Transaction::find($id_transaction);
-        
-        $room = Room::find($transaction->service_id);
+        $room = Room::find($id);
         
         $hotel = Hotel::find($room->hotel_id);
 
-        return view('rooms.show')->with(compact('hotel', 'transaction', 'room'));
+        return view('rooms.show')->with(compact('hotel', 'room'));
     }
 }

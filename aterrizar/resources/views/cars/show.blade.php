@@ -9,7 +9,6 @@
                 <h5 class="card-subtitle mb-2">Segmento: {{ $car->segment }}</h5>
                 <h5 class="card-subtitle mb-2">Autonomía {{ $car->range }} KM</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Desde el: {{ Carbon\Carbon::parse($transaction->from)->format('d-m-Y') }} hasta el: {{ Carbon\Carbon::parse($transaction->to)->format('d-m-Y') }}</li>
                     <li class="list-group-item">Retira en: {{ $agency->city->name }}, {{ $agency->city->country }}</li>
                     <li class="list-group-item"> Compañia: {{ $agency->name }}</li>
                     <li class="list-group-item">{{ $agency->address }}</li>
