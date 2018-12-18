@@ -120,8 +120,7 @@ class TransactionController extends Controller
 
 
     private function getPoints($price) {
-
-        return floor($price * AdminPanel::find(1)->points_per_peso);
+        return floor((int)$price * AdminPanel::find(1)->pesos_per_point);
     }
 
 
