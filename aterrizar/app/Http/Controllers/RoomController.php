@@ -93,7 +93,7 @@ class RoomController extends Controller
         return back()->withInput($input);
     }
 
-    public function show(Request $request, $id_transaction) {
+    public function show(Request $request, $id) {
 
         $request->user()->authorizeRoles(['user']);
 
