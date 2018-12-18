@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\{Airline, City, Flight};
 use App\Http\Requests\{SearchFlight, StoreFlight};
@@ -12,6 +13,8 @@ class FlightController extends Controller
 {
     
     public function index(Request $request) {
+
+        Auth::guest() or $request->user()->authorizeRoles(['user']);
 
         $cities = City::pluck('name', 'id');
 
@@ -25,7 +28,9 @@ class FlightController extends Controller
     }
     
     
-    public function create() {
+    public function create(Request $request) {
+
+        $request->user()->authorizeRoles(['comercial']);
 
         $cities = City::pluck('name', 'id');
         $airlines = Airline::pluck('name', 'id');
@@ -34,6 +39,8 @@ class FlightController extends Controller
 
 
     public function store(StoreFlight $request) {
+
+        $request->user()->authorizeRoles(['comercial']);
 
         $flight = new Flight();
         $flight->from()->associate(City::find($request->from));
@@ -61,6 +68,8 @@ class FlightController extends Controller
 
     public function search(SearchFlight $request, SearchService $search) {
 
+        Auth::guest() or $request->user()->authorizeRoles(['user']);
+
         if ($request->non_stop) {
             $flights = $search->nonStopFlights(
                 $request->from,
@@ -86,7 +95,9 @@ class FlightController extends Controller
     }
     
 
-    public function show($id) {
+    public function show(Request $request, $id) {
+
+        $request->user()->authorizeRoles(['user']);
 
         $flight = Flight::findOrFail($id);
 

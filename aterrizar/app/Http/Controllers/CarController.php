@@ -3,14 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\{Car, CarBrand, CarRentalAgency,City, Transaction};
-use Illuminate\Http\Request;
 use App\Http\Requests\{SearchCar, StoreCar};
 use App\Services\SearchService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class CarController extends Controller
 {
+
     public function index(Request $request) {
+
+        Auth::guest() or $request->user()->authorizeRoles(['user']);
+
         $cities = City::pluck('name', 'id');
         $car_brands = CarBrand::pluck('name','id');
         $car_brands->prepend('Cualquiera');
@@ -26,7 +31,9 @@ class CarController extends Controller
     }
     
     
-    public function create() {
+    public function create(Request $request) {
+
+        $request->user()->authorizeRoles(['comercial']);
 
         $brands = CarBrand::pluck('name', 'id');
         $agencies = [];
@@ -39,6 +46,8 @@ class CarController extends Controller
 
 
     public function store(StoreCar $request) {
+
+        $request->user()->authorizeRoles(['comercial']);
 
         $car = new Car();
         $car->brand()->associate(CarBrand::find($request->brand));
@@ -54,21 +63,25 @@ class CarController extends Controller
 
     public function search(SearchCar $request, SearchService $search) {
 
-            $cars = $search->cars(
-                $request->from,
-                $request->to,
-                $request->date_rent,
-                $request->date_return,
-                $request->brand,
-                $request->agency
-            );
+        Auth::guest() or $request->user()->authorizeRoles(['user']);
+
+        $cars = $search->cars(
+            $request->from,
+            $request->to,
+            $request->date_rent,
+            $request->date_return,
+            $request->brand,
+            $request->agency
+        );
         $input = $request->all();
         $input['cars'] = $cars;
         
         return back()->withInput($input);
     }
 
-    public function show($id) {
+    public function show(Request $request, $id) {
+
+        $request->user()->authorizeRoles(['user']);
 
         $transaction= Transaction::find($id);
         $car= Car::find($transaction->service_id);

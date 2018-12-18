@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use App\{City, Hotel, Room, Transaction};
@@ -11,80 +12,90 @@ use App\Services\SearchService;
 class RoomController extends Controller
 {
 
-public function array_flatten($array) { 
-    if (!is_array($array)) { 
-        return false; 
-    } 
-    $result = array(); 
-    foreach ($array as $key => $value) { 
-        if (is_array($value)) { 
-          $result = array_merge($result, array_flatten($value)); 
-    } else { 
-          $result[$key] = $value; 
-    } 
-    } 
-    return $result; 
-}    
+    public function array_flatten($array) { 
+        if (!is_array($array)) { 
+            return false; 
+        } 
+        $result = array(); 
+        foreach ($array as $key => $value) { 
+            if (is_array($value)) { 
+            $result = array_merge($result, array_flatten($value)); 
+        } else { 
+            $result[$key] = $value; 
+        } 
+        } 
+        return $result; 
+    }    
 
 
-public function index(Request $request) {
+    public function index(Request $request) {
 
-    $cities = City::pluck('name', 'id');
-    $hotel = Hotel::all();
-    $amenities= Hotel::select('amenities')->get();
-    $amenities = (array) json_decode($amenities, true);
-    $amenities = $this->array_flatten($amenities);
-    $final= array_unique($amenities);
-    $final=array_combine($final, $final);
-    
+        Auth::guest() or $request->user()->authorizeRoles(['user']);
 
-    $rooms = $request->old('rooms');
-    if ($rooms !== null) {
-            // Keep search on refresh
-        $request->session()->reflash();
-        return view('rooms.index')->with(compact('rooms', 'cities','final'));
+        $cities = City::pluck('name', 'id');
+        $hotel = Hotel::all();
+        $amenities= Hotel::select('amenities')->get();
+        $amenities = (array) json_decode($amenities, true);
+        $amenities = $this->array_flatten($amenities);
+        $final= array_unique($amenities);
+        $final=array_combine($final, $final);
+        
+
+        $rooms = $request->old('rooms');
+        if ($rooms !== null) {
+                // Keep search on refresh
+            $request->session()->reflash();
+            return view('rooms.index')->with(compact('rooms', 'cities','final'));
+        }
+        return view('rooms.index')->with(compact('cities','final'));
     }
-    return view('rooms.index')->with(compact('cities','final'));
-}
 
-public function create() {
+    public function create(Request $request) {
 
-    $hotels = [];
-    foreach (Hotel::all() as $hotel) {
-        $hotels[$hotel->id] = "{$hotel->name} - {$hotel->city->name}";
+        $request->user()->authorizeRoles(['comercial']);
+
+        $hotels = [];
+        foreach (Hotel::all() as $hotel) {
+            $hotels[$hotel->id] = "{$hotel->name} - {$hotel->city->name}";
+        }
+        return view('rooms.create')->with(compact('hotels'));
     }
-    return view('rooms.create')->with(compact('hotels'));
-}
 
 
-public function store(StoreRoom $request) {
+    public function store(StoreRoom $request) {
 
-    $room = new Room();
-    $room->hotel()->associate(Hotel::find($request->hotel));
-    $room->capacity = $request->capacity;
-    $room->from = $request->from;
-    $room->to = $request->to;
-    $room->save();
+        $request->user()->authorizeRoles(['comercial']);
 
-    return back()->with('success', true);
-}
+        $room = new Room();
+        $room->hotel()->associate(Hotel::find($request->hotel));
+        $room->capacity = $request->capacity;
+        $room->from = $request->from;
+        $room->to = $request->to;
+        $room->save();
 
-public function search(SearchRoom $request, SearchService $search) {
+        return back()->with('success', true);
+    }
 
-    $rooms = $search->rooms(
-        $request->city,
-        $request->capacity,
-        $request->from,
-        $request->to,
-        $request->amenities
-        );
-    $input = $request->all();
-    $input['rooms'] = $rooms;
+    public function search(SearchRoom $request, SearchService $search) {
 
-    return back()->withInput($input);
-}
+        Auth::guest() or $request->user()->authorizeRoles(['user']);
 
-public function show($id_transaction) {
+        $rooms = $search->rooms(
+            $request->city,
+            $request->capacity,
+            $request->from,
+            $request->to,
+            $request->amenities
+            );
+        $input = $request->all();
+        $input['rooms'] = $rooms;
+
+        return back()->withInput($input);
+    }
+
+    public function show(Request $request, $id_transaction) {
+
+        $request->user()->authorizeRoles(['user']);
 
         $transaction=Transaction::find($id_transaction);
         
@@ -93,5 +104,5 @@ public function show($id_transaction) {
         $hotel = Hotel::find($room->hotel_id);
 
         return view('rooms.show')->with(compact('hotel', 'transaction', 'room'));
-}
+    }
 }

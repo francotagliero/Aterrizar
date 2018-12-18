@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Hotel;
+use App\{Hotel, Transaction};
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreRating;
 
 class HotelController extends Controller
 {
