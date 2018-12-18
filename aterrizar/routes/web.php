@@ -66,6 +66,8 @@ Route::get('/givenregistration/create', 'RegistrableUserController@create')->nam
 Route::post('/givenregistration', 'RegistrableUserController@store')->name('givenregistration.store');
 
 Route::get('/hotels/{hotel}', 'HotelController@show')->name('hotels.show');
+Route::get('/hotels/{hotel}/rate', 'HotelController@rate')->name('hotels.rate')->middleware('auth');
+Route::post('/hotels/{hotel}/rate', 'HotelController@storeRating')->name('hotels.storeRating')->middleware('auth');
 
 Route::get('/agencies/{agency}', 'CarRentalAgencyController@show')->name('agencies.show');
 

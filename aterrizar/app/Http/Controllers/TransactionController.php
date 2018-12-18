@@ -109,7 +109,7 @@ class TransactionController extends Controller
         $transaction->price = $room->priceForDates($from, $to, $capacity);
         $transaction->from = $from;
         $transaction->to = $to;
-        $transaction->extra = [ '' ];
+        $transaction->extra = [ 'rated' => false ];
         $transaction->points = $this->getPoints($transaction->price);
         $transaction->points_given = false;
         $transaction->save();

@@ -8,6 +8,8 @@
             @include('common.alert', ['type' => 'success', 'message' => 'El servicio ha sido cancelado correctamente'])
         @elseif (session('checkedout'))
             @include('common.alert', ['type' => 'success', 'message' => 'La compra se ha realizado con éxito'])
+        @elseif (session('rated'))
+            @include('common.alert', ['type' => 'success', 'message' => 'Su calificación se ha guradado'])
         @endif
     </div>
     <div class="row justify-content-center">
@@ -38,11 +40,15 @@
                     <td class="text-sm-right">
                     @switch($transaction->status)
                         @case('Comprado')
-                        <a class="btn btn-outline-danger" href="{!! route('transactions.cancel', $transaction->id) !!}" role="button">Cancelar</a>
+                            <a class="btn btn-outline-danger" href="{!! route('transactions.cancel', $transaction->id) !!}" role="button">Cancelar</a>
                             @break
                         @case('Cancelado')
-                        {{-- <span class="text-danger">Cancelado</span> --}}
-                        <a class="btn btn-danger disabled" href="" role="button">Cancelado</a>
+                            <a class="btn btn-danger disabled" href="" role="button">Cancelado</a>
+                            @break
+                        @case('Consumido')
+                            @if($transaction->service->service_type == 'Room' and ! $transaction->extra['rated'])
+                            <a class="btn btn-outline-secondary" href="{!! route('hotels.rate', $transaction->service->id) !!}" role="button"><i class="far fa-star fa-lg"></i> Calificar</a>
+                            @endif
                     @endswitch
                     </td>
                 </tr>

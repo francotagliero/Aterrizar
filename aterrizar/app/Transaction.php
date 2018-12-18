@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Room;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -73,5 +74,17 @@ class Transaction extends Model
     public function scopePast($query) {
 
         return $query->where('to', '<', new Carbon('now'));
+    }
+
+
+    public function scopeConsumed($query) {
+
+        return $query->where('status', self::STATUS_CONSUMED);
+    }
+
+    
+    public function scopeRoomsOnly($query) {
+
+        return $query->where('service_type', Room::class);
     }
 }
